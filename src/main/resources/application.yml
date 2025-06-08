@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: mediscreen_patients
+  application:
+    name: patient-service
+server:
+  port: 8081
