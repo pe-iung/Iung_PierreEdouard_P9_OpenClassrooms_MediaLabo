@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+repomix-output.xml
+PatientService/.gitattributes
+PatientService/.gitignore
+PatientService/.mvn/
+PatientService/mvnw
+PatientService/mvnw.cmd
