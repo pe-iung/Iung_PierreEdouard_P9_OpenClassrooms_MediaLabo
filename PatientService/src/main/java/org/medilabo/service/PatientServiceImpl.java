@@ -1,7 +1,7 @@
-package org.medilabo.Service;
+package org.medilabo.service;
 
-import org.medilabo.DTO.PatientRequest;
-import org.medilabo.Model.Patient;
+import org.medilabo.dto.PatientRequest;
+import org.medilabo.model.Patient;
 import org.medilabo.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

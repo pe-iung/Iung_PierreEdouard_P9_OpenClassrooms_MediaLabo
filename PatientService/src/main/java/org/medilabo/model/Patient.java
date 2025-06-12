@@ -1,15 +1,20 @@
-package org.medilabo.Model;
+package org.medilabo.model;
+
+import jakarta.persistence.*;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.UUID;
 
+@Table
+@Entity
 @Data
 public class Patient {
+
     @Id
-    private String id;
+    private Long id;
 
     @NotBlank(message = "First name is mandatory")
     private String firstName;
@@ -21,7 +26,8 @@ public class Patient {
     private LocalDate dateOfBirth;
 
     @NotBlank(message = "Gender is mandatory")
-    private String gender;
+    @Enumerated(value = EnumType.STRING)
+    private SexEnum gender;
 
     private String address;
     private String phone;

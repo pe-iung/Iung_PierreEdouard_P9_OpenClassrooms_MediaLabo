@@ -1,6 +1,6 @@
-package org.medilabo.Service;
+package org.medilabo.service;
 
-import org.medilabo.DTO.PatientRequest;
+import org.medilabo.dto.PatientRequest;
 
 import java.util.List;
 

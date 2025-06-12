@@ -1,4 +1,4 @@
-package org.medilabo.DTO;
+package org.medilabo.dto;
 
 import lombok.Data;
 import java.time.LocalDate;

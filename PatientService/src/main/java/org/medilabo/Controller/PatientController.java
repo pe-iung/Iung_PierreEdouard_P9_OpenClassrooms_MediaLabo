@@ -1,7 +1,7 @@
 package org.medilabo.Controller;
 
-import org.medilabo.DTO.PatientRequest;
-import org.medilabo.Service.PatientService;
+import org.medilabo.dto.PatientRequest;
+import org.medilabo.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
