@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class PatientRequest {
-
+    private Long id;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
@@ -20,6 +20,7 @@ public class PatientRequest {
 
     public PatientRequest(Patient patient)
     {
+        this.id = patient.getId();
         this.firstName = patient.getFirstName();
         this.lastName = patient.getLastName();
         this.dateOfBirth = patient.getDateOfBirth();
