@@ -1,0 +1,55 @@
+package org.medilabo.frontend.service;
+
+import org.medilabo.frontend.dto.PatientDTO;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import java.util.Arrays;
+import java.util.List;
+
+@Service
+public class PatientService {
+
+    @Value("${gateway.url}")
+    private String gatewayUrl;
+
+    private final RestTemplate restTemplate;
+
+    public PatientService() {
+        this.restTemplate = new RestTemplate();
+    }
+
+    public List<PatientDTO> getAllPatients() {
+        PatientDTO[] patients = restTemplate.getForObject(
+                gatewayUrl + "/api/patients",
+                PatientDTO[].class
+        );
+        return Arrays.asList(patients);
+    }
+
+    public PatientDTO getPatient(Long id) {
+        return restTemplate.getForObject(
+                gatewayUrl + "/api/patients/" + id,
+                PatientDTO.class
+        );
+    }
+
+    public PatientDTO createPatient(PatientDTO patient) {
+        return restTemplate.postForObject(
+                gatewayUrl + "/api/patients",
+                patient,
+                PatientDTO.class
+        );
+    }
+
+    public void updatePatient(Long id, PatientDTO patient) {
+        restTemplate.put(
+                gatewayUrl + "/api/patients/" + id,
+                patient
+        );
+    }
+
+    public void deletePatient(Long id) {
+        restTemplate.delete(gatewayUrl + "/api/patients/" + id);
+    }
+}
