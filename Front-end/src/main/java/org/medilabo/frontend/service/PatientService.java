@@ -1,7 +1,9 @@
 package org.medilabo.frontend.service;
 
+import jakarta.annotation.PostConstruct;
 import org.medilabo.frontend.dto.PatientDTO;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
@@ -9,6 +11,11 @@ import java.util.List;
 
 @Service
 public class PatientService {
+    @Value("${backend.api.username}")
+    private String apiUsername;
+
+    @Value("${backend.api.password}")
+    private String apiPassword;
 
     @Value("${gateway.url}")
     private String gatewayUrl;
@@ -18,6 +25,14 @@ public class PatientService {
     public PatientService() {
         this.restTemplate = new RestTemplate();
     }
+
+    @PostConstruct
+    private void configureRestTemplate() {
+        restTemplate.getInterceptors().add(
+                new BasicAuthenticationInterceptor(apiUsername, apiPassword)
+        );
+    }
+
 
     public List<PatientDTO> getAllPatients() {
         PatientDTO[] patients = restTemplate.getForObject(
