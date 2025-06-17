@@ -1,4 +1,4 @@
-package org.medilabo.Controller;
+package org.medilabo.controller;
 
 import org.medilabo.dto.PatientRequest;
 import org.medilabo.service.PatientService;
@@ -20,7 +20,7 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public PatientRequest getPatient(@PathVariable String id) {
+    public PatientRequest getPatient(@PathVariable Long id) {
         return patientService.getPatient(id);
     }
 
@@ -30,13 +30,13 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public PatientRequest updatePatient(@PathVariable String id,
+    public PatientRequest updatePatient(@PathVariable Long id,
                                     @Valid @RequestBody PatientRequest PatientRequest) {
         return patientService.updatePatient(id, PatientRequest);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePatient(@PathVariable String id) {
+    public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
         return ResponseEntity.ok().build();
     }

@@ -7,11 +7,13 @@ import java.util.List;
 public interface PatientService {
     List<PatientRequest> getAllPatients();
 
-    PatientRequest getPatient(String id);
+    PatientRequest getPatient(Long id);
 
     PatientRequest createPatient(PatientRequest PatientRequest);
 
-    PatientRequest updatePatient(String id, PatientRequest patientDTO);
+    PatientRequest updatePatient(Long id, PatientRequest patientDTO);
 
-    void deletePatient(String id);
+    void deletePatient(Long id);
+
+    void deleteAll();
 }

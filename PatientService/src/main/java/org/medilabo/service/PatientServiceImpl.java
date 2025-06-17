@@ -1,5 +1,6 @@
 package org.medilabo.service;
 
+import lombok.NoArgsConstructor;
 import org.medilabo.dto.PatientRequest;
 import org.medilabo.model.Patient;
 import org.medilabo.repository.PatientRepository;
@@ -24,8 +25,8 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public PatientRequest getPatient(String id) {
-        Patient patient = patientRepository.findById(id)
+    public PatientRequest getPatient(Long id) {
+        Patient patient = (Patient) patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
         return modelMapper.map(patient, PatientRequest.class);
     }
@@ -38,7 +39,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public PatientRequest updatePatient(String id, PatientRequest patientDTO) {
+    public PatientRequest updatePatient(Long id, PatientRequest patientDTO) {
         if (!patientRepository.existsById(id)) {
             throw new RuntimeException("Patient not found");
         }
@@ -49,7 +50,12 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public void deletePatient(String id) {
+    public void deletePatient(Long id) {
         patientRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        patientRepository.deleteAll();
     }
 }

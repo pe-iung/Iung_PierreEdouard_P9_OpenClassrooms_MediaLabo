@@ -2,6 +2,7 @@ package org.medilabo.model;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
@@ -14,6 +15,7 @@ import java.util.UUID;
 public class Patient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "First name is mandatory")
@@ -25,7 +27,7 @@ public class Patient {
     @Past(message = "Date of birth must be in the past")
     private LocalDate dateOfBirth;
 
-    @NotBlank(message = "Gender is mandatory")
+    @NotNull(message = "Gender is mandatory")
     @Enumerated(value = EnumType.STRING)
     private SexEnum gender;
 
