@@ -1,0 +1,28 @@
+services:
+  # MySQL for PatientService
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_patients
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: medilabo
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # MongoDB for NoteService
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_notes
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=rootuser
+      - MONGO_INITDB_ROOT_PASSWORD=rootpass
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mysql_data:
+  mongodb_data:
