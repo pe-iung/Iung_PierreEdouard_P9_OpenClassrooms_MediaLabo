@@ -1,5 +1,4 @@
 services:
-  # MySQL for PatientService
   mysql:
     image: mysql:8.0
     container_name: mysql_patients
@@ -10,8 +9,9 @@ services:
       MYSQL_DATABASE: medilabo
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - medilabo-network
 
-  # MongoDB for NoteService
   mongodb:
     image: mongo:latest
     container_name: mongodb_notes
@@ -22,7 +22,69 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=rootpass
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - medilabo-network
+
+  patient-service:
+    build: ./PatientService
+    container_name: patient-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/medilabo
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - mysql
+    networks:
+      - medilabo-network
+
+  note-service:
+    build: ./NoteService
+    container_name: note-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_USERNAME=rootuser
+      - SPRING_DATA_MONGODB_PASSWORD=rootpass
+    depends_on:
+      - mongodb
+    networks:
+      - medilabo-network
+
+  gateway:
+    build: ./Gateway
+    container_name: gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_SECURITY_USER_NAME=admin
+      - SPRING_SECURITY_USER_PASSWORD=admin123
+    depends_on:
+      - patient-service
+      - note-service
+    networks:
+      - medilabo-network
+
+  frontend:
+    build: ./Front-end
+    container_name: frontend
+    ports:
+      - "8082:8082"
+    environment:
+      - API_USERNAME=admin
+      - API_PASSWORD=admin123
+      - GATEWAY_URL=http://gateway:8080
+    depends_on:
+      - gateway
+    networks:
+      - medilabo-network
 
 volumes:
   mysql_data:
   mongodb_data:
+
+networks:
+  medilabo-network:
+    driver: bridge
