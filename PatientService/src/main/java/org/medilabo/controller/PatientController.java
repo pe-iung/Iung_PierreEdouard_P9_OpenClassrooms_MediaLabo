@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/patients")
@@ -27,6 +28,13 @@ public class PatientController {
     @PostMapping
     public PatientRequest createPatient(@Valid @RequestBody PatientRequest PatientRequest) {
         return patientService.createPatient(PatientRequest);
+    }
+
+    @PostMapping("/batch")
+    public List<PatientRequest> createPatients(@RequestBody List<PatientRequest> patients) {
+        return patients.stream()
+                .map(patientService::createPatient)
+                .collect(Collectors.toList());
     }
 
     @PutMapping("/{id}")

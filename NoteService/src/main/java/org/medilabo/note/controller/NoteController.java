@@ -6,6 +6,7 @@ import org.medilabo.note.service.NoteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/notes")
@@ -22,6 +23,13 @@ public class NoteController {
     @PostMapping
     public NoteDTO addNote(@RequestBody NoteDTO noteDTO) {
         return noteService.addNote(noteDTO);
+    }
+
+    @PostMapping("/batch")
+    public List<NoteDTO> addNotes(@RequestBody List<NoteDTO> notes) {
+        return notes.stream()
+                .map(noteService::addNote)
+                .collect(Collectors.toList());
     }
 
     @PutMapping("/{id}")
