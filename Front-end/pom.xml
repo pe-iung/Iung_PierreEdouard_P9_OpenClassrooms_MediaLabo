@@ -55,9 +55,9 @@
         <optional>true</optional>
     </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>4.3.0</version>
         </dependency>
     </dependencies>
 

@@ -1,7 +1,7 @@
 package org.medilabo.frontend.controller;
 
 import org.medilabo.frontend.dto.PatientDTO;
-import org.medilabo.frontend.service.PatientService;
+import org.medilabo.frontend.backend.PatientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
