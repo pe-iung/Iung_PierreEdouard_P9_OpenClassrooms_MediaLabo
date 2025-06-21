@@ -1,4 +1,4 @@
-package org.medilabo.frontend.service;
+package org.medilabo.frontend.backend;
 
 import jakarta.annotation.PostConstruct;
 import org.medilabo.frontend.dto.PatientDTO;
@@ -9,6 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
 
+//todo : add interface PatientService
+// todo : add feign tool http
 @Service
 public class PatientService {
     @Value("${backend.api.username}")
