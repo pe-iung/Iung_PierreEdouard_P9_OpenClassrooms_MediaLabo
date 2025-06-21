@@ -29,6 +29,7 @@
             <td th:text="${patient.dateOfBirth}"></td>
             <td th:text="${patient.gender}"></td>
             <td>
+                <a th:href="@{/patients/{id}/notes(id=${patient.id})}" class="btn btn-sm btn-info">Notes</a>
                 <a th:href="@{/patients/{id}/edit(id=${patient.id})}" class="btn btn-sm btn-warning">Edit</a>
                 <a th:href="@{/patients/{id}/delete(id=${patient.id})}" class="btn btn-sm btn-danger"
                    onclick="return confirm('Are you sure you want to delete this patient?')">Delete</a>
