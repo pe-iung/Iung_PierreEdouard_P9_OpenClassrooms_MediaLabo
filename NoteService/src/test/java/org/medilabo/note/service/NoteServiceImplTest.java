@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,9 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+
 @ExtendWith(MockitoExtension.class)
 class NoteServiceImplTest {
+
+    @InjectMocks
+    private NoteServiceImpl noteService;
 
     @Mock
     private NoteRepository noteRepository;
@@ -30,8 +32,6 @@ class NoteServiceImplTest {
     @Mock
     private ModelMapper modelMapper;
 
-    @InjectMocks
-    private NoteServiceImpl noteService;
 
     private Note testNote;
     private NoteDTO testNoteDTO;
