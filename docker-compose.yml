@@ -81,6 +81,20 @@ services:
     networks:
       - medilabo-network
 
+  risk-assessment-service:
+    build: ./RiskAssessmentService
+    container_name: risk-assessment-service
+    ports:
+      - "8084:8084"
+    environment:
+      - GATEWAY_URL=http://gateway:8080
+      - API_USERNAME=admin
+      - API_PASSWORD=admin123
+    depends_on:
+      - gateway
+    networks:
+      - medilabo-network
+
 volumes:
   mysql_data:
   mongodb_data:
