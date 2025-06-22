@@ -1,4 +1,4 @@
-package org.medilabo.risk.dto;
+package org.medilabo.riskassessmentservice.dto;
 
 import lombok.Data;
 import java.time.LocalDate;

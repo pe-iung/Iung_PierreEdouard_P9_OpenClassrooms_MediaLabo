@@ -1,4 +1,4 @@
-package org.medilabo.risk;
+package org.medilabo.riskassessmentservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
