@@ -1,7 +1,9 @@
 package org.medilabo.frontend.controller;
 
+import org.medilabo.frontend.backend.RiskAssessmentService;
 import org.medilabo.frontend.dto.PatientDTO;
 import org.medilabo.frontend.backend.PatientService;
+import org.medilabo.frontend.dto.RiskAssessmentDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController {
 
     private final PatientService patientService;
+    private final RiskAssessmentService riskAssessmentService;
 
-    public PatientController(PatientService patientService) {
+    public PatientController(PatientService patientService, RiskAssessmentService riskAssessmentService) {
         this.patientService = patientService;
+        this.riskAssessmentService = riskAssessmentService;
     }
 
     @GetMapping
@@ -50,5 +54,13 @@ public class PatientController {
     public String deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
         return "redirect:/patients";
+    }
+    @GetMapping("/{id}/risk")
+    public String showRiskAssessment(@PathVariable Long id, Model model) {
+        RiskAssessmentDTO risk = riskAssessmentService.assessPatient(id);
+        PatientDTO patient = patientService.getPatient(id);
+        model.addAttribute("risk", risk);
+        model.addAttribute("patient", patient);
+        return "patients/risk";
     }
 }
