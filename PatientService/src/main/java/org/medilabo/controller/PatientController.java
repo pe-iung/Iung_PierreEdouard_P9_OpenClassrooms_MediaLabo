@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/patients")
 @RequiredArgsConstructor
 public class PatientController {
+
     private final PatientService patientService;
 
     @GetMapping
