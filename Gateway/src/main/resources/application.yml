@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: api_gateway
+  cloud:
+    gateway:
+      routes:
+        - id: patient_service
+          uri: http://patient-service:8081
+          predicates:
+            - Path=/api/patients/**,/api/patients/batch
+
+        - id: note_service
+          uri: http://note-service:8083
+          predicates:
+            - Path=/api/notes/**,/api/notes/batch
+
+        - id: risk_assessment_service
+          uri: http://risk-assessment-service:8084
+          predicates:
+            - Path=/api/risk/**
+
+server:
+  port: 8080
