@@ -46,14 +46,14 @@ public class NoteController {
     }
 
     @PostMapping("/{id}")
-    public String updateNote(@PathVariable Long patientId, @PathVariable String id, @ModelAttribute NoteDTO note) {  // Changed from String to Long
+    public String updateNote(@PathVariable Long patientId, @PathVariable String id, @ModelAttribute NoteDTO note) {
         note.setPatientId(patientId);
         noteService.updateNote(id, note);
         return "redirect:/patients/" + patientId + "/notes";
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteNote(@PathVariable Long patientId, @PathVariable String id) {  // Changed from String to Long
+    public String deleteNote(@PathVariable Long patientId, @PathVariable String id) {
         noteService.deleteNote(id);
         return "redirect:/patients/" + patientId + "/notes";
     }
