@@ -1,7 +1,7 @@
 package org.medilabo.frontend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.medilabo.frontend.backend.NoteService;
+import org.medilabo.frontend.backend.NoteServiceImpl;
 import org.medilabo.frontend.dto.NoteDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class NoteController {
 
-    private final NoteService noteService;
+    private final NoteServiceImpl noteServiceImpl;
 
     @GetMapping
     public String listNotes(@PathVariable Long patientId, Model model) {
-        model.addAttribute("notes", noteService.getPatientNotes(patientId));
+        model.addAttribute("notes", noteServiceImpl.getPatientNotes(patientId));
         model.addAttribute("patientId", patientId);
         return "notes/list";
     }
@@ -32,13 +32,13 @@ public class NoteController {
     @PostMapping
     public String createNote(@PathVariable Long patientId, @ModelAttribute NoteDTO note) {
         note.setPatientId(patientId);
-        noteService.addNote(note);
+        noteServiceImpl.addNote(note);
         return "redirect:/patients/" + patientId + "/notes";
     }
 
     @GetMapping("/{id}/edit")
     public String editNoteForm(@PathVariable Long patientId, @PathVariable String id, Model model) {
-        model.addAttribute("note", noteService.getPatientNotes(patientId).stream()
+        model.addAttribute("note", noteServiceImpl.getPatientNotes(patientId).stream()
                 .filter(n -> n.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Note not found")));
@@ -48,13 +48,13 @@ public class NoteController {
     @PostMapping("/{id}")
     public String updateNote(@PathVariable Long patientId, @PathVariable String id, @ModelAttribute NoteDTO note) {
         note.setPatientId(patientId);
-        noteService.updateNote(id, note);
+        noteServiceImpl.updateNote(id, note);
         return "redirect:/patients/" + patientId + "/notes";
     }
 
     @GetMapping("/{id}/delete")
     public String deleteNote(@PathVariable Long patientId, @PathVariable String id) {
-        noteService.deleteNote(id);
+        noteServiceImpl.deleteNote(id);
         return "redirect:/patients/" + patientId + "/notes";
     }
 }

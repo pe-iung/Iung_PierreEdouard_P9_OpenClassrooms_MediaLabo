@@ -1,8 +1,8 @@
 package org.medilabo.frontend.controller;
 
-import org.medilabo.frontend.backend.RiskAssessmentService;
+import org.medilabo.frontend.backend.PatientServiceImpl;
+import org.medilabo.frontend.backend.RiskAssessmentServiceImpl;
 import org.medilabo.frontend.dto.PatientDTO;
-import org.medilabo.frontend.backend.PatientService;
 import org.medilabo.frontend.dto.RiskAssessmentDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/patients")
 public class PatientController {
 
-    private final PatientService patientService;
-    private final RiskAssessmentService riskAssessmentService;
+    private final PatientServiceImpl patientServiceImpl;
+    private final RiskAssessmentServiceImpl riskAssessmentServiceImpl;
 
-    public PatientController(PatientService patientService, RiskAssessmentService riskAssessmentService) {
-        this.patientService = patientService;
-        this.riskAssessmentService = riskAssessmentService;
+    public PatientController(PatientServiceImpl patientServiceImpl, RiskAssessmentServiceImpl riskAssessmentServiceImpl) {
+        this.patientServiceImpl = patientServiceImpl;
+        this.riskAssessmentServiceImpl = riskAssessmentServiceImpl;
     }
 
     @GetMapping
     public String listPatients(Model model) {
-        model.addAttribute("patients", patientService.getAllPatients());
+        model.addAttribute("patients", patientServiceImpl.getAllPatients());
         return "patients/list";
     }
 
@@ -34,31 +34,31 @@ public class PatientController {
 
     @PostMapping
     public String createPatient(@ModelAttribute PatientDTO patient) {
-        patientService.createPatient(patient);
+        patientServiceImpl.createPatient(patient);
         return "redirect:/patients";
     }
 
     @GetMapping("/{id}/edit")
     public String editPatientForm(@PathVariable Long id, Model model) {
-        model.addAttribute("patient", patientService.getPatient(id));
+        model.addAttribute("patient", patientServiceImpl.getPatient(id));
         return "patients/form";
     }
 
     @PostMapping("/{id}")
     public String updatePatient(@PathVariable Long id, @ModelAttribute PatientDTO patient) {
-        patientService.updatePatient(id, patient);
+        patientServiceImpl.updatePatient(id, patient);
         return "redirect:/patients";
     }
 
     @GetMapping("/{id}/delete")
     public String deletePatient(@PathVariable Long id) {
-        patientService.deletePatient(id);
+        patientServiceImpl.deletePatient(id);
         return "redirect:/patients";
     }
     @GetMapping("/{id}/risk")
     public String showRiskAssessment(@PathVariable Long id, Model model) {
-        RiskAssessmentDTO risk = riskAssessmentService.assessPatient(id);
-        PatientDTO patient = patientService.getPatient(id);
+        RiskAssessmentDTO risk = riskAssessmentServiceImpl.assessPatient(id);
+        PatientDTO patient = patientServiceImpl.getPatient(id);
         model.addAttribute("risk", risk);
         model.addAttribute("patient", patient);
         return "patients/risk";

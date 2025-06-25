@@ -2,19 +2,14 @@ package org.medilabo.frontend.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.medilabo.frontend.backend.NoteService;
-import org.medilabo.frontend.backend.PatientService;
+import org.medilabo.frontend.backend.NoteServiceImpl;
+import org.medilabo.frontend.backend.PatientServiceImpl;
 import org.medilabo.frontend.dto.NoteDTO;
 import org.medilabo.frontend.dto.PatientDTO;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -36,10 +31,10 @@ class FrontEndControllerIT {
     private MockMvc mockMvc;
 
     @MockBean
-    private PatientService patientService;
+    private PatientServiceImpl patientServiceImpl;
 
     @MockBean
-    private NoteService noteService;
+    private NoteServiceImpl noteServiceImpl;
 
     @Autowired
     private PatientController patientController;
@@ -74,7 +69,7 @@ class FrontEndControllerIT {
     // Patient Controller Tests
     @Test
     void listPatients_ShouldDisplayPatientsList() throws Exception {
-        when(patientService.getAllPatients()).thenReturn(List.of(testPatient));
+        when(patientServiceImpl.getAllPatients()).thenReturn(List.of(testPatient));
 
         mockMvc.perform(get("/patients"))
                 .andExpect(status().isOk())
@@ -92,7 +87,7 @@ class FrontEndControllerIT {
 
     @Test
     void createPatient_ShouldRedirectToList() throws Exception {
-        when(patientService.createPatient(any(PatientDTO.class))).thenReturn(testPatient);
+        when(patientServiceImpl.createPatient(any(PatientDTO.class))).thenReturn(testPatient);
 
         mockMvc.perform(post("/patients")
                         .flashAttr("patient", testPatient))
@@ -102,7 +97,7 @@ class FrontEndControllerIT {
 
     @Test
     void editPatientForm_ShouldDisplayForm() throws Exception {
-        when(patientService.getPatient(1L)).thenReturn(testPatient);
+        when(patientServiceImpl.getPatient(1L)).thenReturn(testPatient);
 
         mockMvc.perform(get("/patients/1/edit"))
                 .andExpect(status().isOk())
@@ -112,7 +107,7 @@ class FrontEndControllerIT {
 
     @Test
     void updatePatient_ShouldRedirectToList() throws Exception {
-        doNothing().when(patientService).updatePatient(eq(1L), any(PatientDTO.class));
+        doNothing().when(patientServiceImpl).updatePatient(eq(1L), any(PatientDTO.class));
 
         mockMvc.perform(post("/patients/1")
                         .flashAttr("patient", testPatient))
@@ -122,7 +117,7 @@ class FrontEndControllerIT {
 
     @Test
     void deletePatient_ShouldRedirectToList() throws Exception {
-        doNothing().when(patientService).deletePatient(1L);
+        doNothing().when(patientServiceImpl).deletePatient(1L);
 
         mockMvc.perform(get("/patients/1/delete"))
                 .andExpect(status().is3xxRedirection())
@@ -132,7 +127,7 @@ class FrontEndControllerIT {
     // Note Controller Tests
     @Test
     void listNotes_ShouldDisplayNotesList() throws Exception {
-        when(noteService.getPatientNotes(1L)).thenReturn(List.of(testNote));
+        when(noteServiceImpl.getPatientNotes(1L)).thenReturn(List.of(testNote));
 
         mockMvc.perform(get("/patients/1/notes"))
                 .andExpect(status().isOk())
@@ -151,7 +146,7 @@ class FrontEndControllerIT {
 
     @Test
     void createNote_ShouldRedirectToList() throws Exception {
-        when(noteService.addNote(any(NoteDTO.class))).thenReturn(testNote);
+        when(noteServiceImpl.addNote(any(NoteDTO.class))).thenReturn(testNote);
 
         mockMvc.perform(post("/patients/1/notes")
                         .flashAttr("note", testNote))
@@ -161,7 +156,7 @@ class FrontEndControllerIT {
 
     @Test
     void editNoteForm_ShouldDisplayForm() throws Exception {
-        when(noteService.getPatientNotes(1L)).thenReturn(List.of(testNote));
+        when(noteServiceImpl.getPatientNotes(1L)).thenReturn(List.of(testNote));
 
         mockMvc.perform(get("/patients/1/notes/1/edit"))
                 .andExpect(status().isOk())
@@ -171,7 +166,7 @@ class FrontEndControllerIT {
 
     @Test
     void updateNote_ShouldRedirectToList() throws Exception {
-        when(noteService.updateNote(eq("1"), any(NoteDTO.class))).thenReturn(testNote);
+        when(noteServiceImpl.updateNote(eq("1"), any(NoteDTO.class))).thenReturn(testNote);
 
         mockMvc.perform(post("/patients/1/notes/1")
                         .flashAttr("note", testNote))
@@ -181,7 +176,7 @@ class FrontEndControllerIT {
 
     @Test
     void deleteNote_ShouldRedirectToList() throws Exception {
-        doNothing().when(noteService).deleteNote("1");
+        doNothing().when(noteServiceImpl).deleteNote("1");
 
         mockMvc.perform(get("/patients/1/notes/1/delete"))
                 .andExpect(status().is3xxRedirection())
