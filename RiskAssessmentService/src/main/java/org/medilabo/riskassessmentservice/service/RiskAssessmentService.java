@@ -10,7 +10,7 @@ import java.util.List;
 public interface RiskAssessmentService {
     RiskAssessment assessPatientRisk(Long patientId);
 
-    int countTriggers(List<NoteDTO> notes);
+    long countTriggers(List<NoteDTO> notes);
 
-    RiskLevel calculateRiskLevel(PatientDTO patient, int triggerCount);
+    RiskLevel calculateRiskLevel(PatientDTO patient, long triggerCount);
 }

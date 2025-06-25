@@ -26,7 +26,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public PatientRequest getPatient(Long id) {
-        Patient patient = (Patient) patientRepository.findById(id)
+        Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
         return modelMapper.map(patient, PatientRequest.class);
     }

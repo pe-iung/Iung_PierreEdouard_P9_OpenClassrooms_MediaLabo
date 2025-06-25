@@ -7,6 +7,6 @@ public class RiskAssessment {
     Long patientId;
     String patientName;
     int age;
-    int triggerCount;
+    long triggerCount;
     RiskLevel riskLevel;
 }

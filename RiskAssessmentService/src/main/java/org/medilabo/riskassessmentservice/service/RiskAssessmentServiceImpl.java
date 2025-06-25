@@ -24,9 +24,22 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
     private final NoteClient noteClient;
 
     private static final Set<String> TRIGGER_TERMS = Set.of(
-            "hémoglobine A1C", "microalbumine", "taille", "poids",
-            "fumeur", "fumeuse", "anormal", "cholestérol", "vertiges",
-            "rechute", "réaction", "anticorps"
+
+            // the triggers are alphabetically ordered
+            // new triggers should be added respecting the order and lowercase
+            "anormal",
+            "anticorps",
+            "cholestérol",
+            "fumer",
+            "fumeur",
+            "fumeuse",
+            "hémoglobine a1c",
+            "microalbumine",
+            "poids",
+            "réaction",
+            "rechute",
+            "taille",
+            "vertiges"
     );
     @Override
     public RiskAssessment assessPatientRisk(Long patientId) {
@@ -35,7 +48,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
         log.info("inside RiskAssessment assessing patient {}:", patientId );
 
         int age = calculateAge(patient.getDateOfBirth());
-        int triggerCount = countTriggers(notes);
+        long triggerCount = countTriggers(notes);
         RiskLevel riskLevel = calculateRiskLevel(patient, triggerCount);
 
         return new RiskAssessment(
@@ -47,7 +60,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
         );
     }
     @Override
-    public int countTriggers(List<NoteDTO> notes) {
+    public long countTriggers(List<NoteDTO> notes) {
         if (notes == null || notes.isEmpty()) {
             return 0;
         }
@@ -56,13 +69,13 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
                 .map(note -> note.getContent().toLowerCase())
                 .collect(Collectors.joining(" "));
 
-        return (int) TRIGGER_TERMS.stream()
+        return TRIGGER_TERMS.stream()
                 .filter(allNotes::contains)
                 .count();
     }
 
     @Override
-    public RiskLevel calculateRiskLevel(PatientDTO patient, int triggerCount) {
+    public RiskLevel calculateRiskLevel(PatientDTO patient, long triggerCount) {
         if (triggerCount == 0) {
             return RiskLevel.NONE;
         }

@@ -28,8 +28,8 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteDTO addNote(NoteDTO noteDTO) {
         Note note = modelMapper.map(noteDTO, Note.class);
-        note.setCreatedAt(LocalDateTime.now());
-        note.setUpdatedAt(LocalDateTime.now());
+//        note.setCreatedAt(LocalDateTime.now());
+//        note.setUpdatedAt(LocalDateTime.now());
         Note savedNote = noteRepository.save(note);
         return modelMapper.map(savedNote, NoteDTO.class);
     }
@@ -39,12 +39,10 @@ public class NoteServiceImpl implements NoteService {
         Note existingNote = noteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Note not found"));
 
-        Note note = modelMapper.map(noteDTO, Note.class);
-        note.setId(id);
-        note.setCreatedAt(existingNote.getCreatedAt());
-        note.setUpdatedAt(LocalDateTime.now());
+        existingNote.setContent(noteDTO.getContent());
+        existingNote.setUpdatedAt(LocalDateTime.now());
 
-        Note updatedNote = noteRepository.save(note);
+        Note updatedNote = noteRepository.save(existingNote);
         return modelMapper.map(updatedNote, NoteDTO.class);
     }
 
