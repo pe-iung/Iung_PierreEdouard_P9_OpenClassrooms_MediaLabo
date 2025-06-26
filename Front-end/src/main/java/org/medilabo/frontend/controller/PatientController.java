@@ -6,6 +6,7 @@ import org.medilabo.frontend.backend.RiskAssessmentServiceImpl;
 import org.medilabo.frontend.dto.PatientDTO;
 import org.medilabo.frontend.dto.RiskAssessmentDTO;
 import org.medilabo.frontend.exceptions.PatientNotFoundException;
+import org.medilabo.frontend.exceptions.RiskAssessmentException;
 import org.medilabo.frontend.exceptions.UIException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,11 +80,20 @@ public class PatientController {
         return "redirect:/patients";
     }
     @GetMapping("/{id}/risk")
-    public String showRiskAssessment(@PathVariable Long id, Model model) {
-        RiskAssessmentDTO risk = riskAssessmentServiceImpl.assessPatient(id);
-        PatientDTO patient = patientServiceImpl.getPatient(id);
-        model.addAttribute("risk", risk);
-        model.addAttribute("patient", patient);
-        return "patients/risk";
+    public String showRiskAssessment(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            RiskAssessmentDTO risk = riskAssessmentServiceImpl.assessPatient(id);
+            PatientDTO patient = patientServiceImpl.getPatient(id);
+            model.addAttribute("risk", risk);
+            model.addAttribute("patient", patient);
+            return "patients/risk";
+        } catch (RiskAssessmentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/patients/" + id;
+        } catch (Exception e) {
+            log.error("Unexpected error assessing risk for patient {}", id, e);
+            redirectAttributes.addFlashAttribute("error", "An unexpected error occurred while assessing risk");
+            return "redirect:/patients/" + id;
+        }
     }
 }

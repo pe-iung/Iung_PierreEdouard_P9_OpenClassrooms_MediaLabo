@@ -6,6 +6,8 @@ import org.medilabo.riskassessmentservice.client.NoteClient;
 import org.medilabo.riskassessmentservice.client.PatientClient;
 import org.medilabo.riskassessmentservice.dto.NoteDTO;
 import org.medilabo.riskassessmentservice.dto.PatientDTO;
+import org.medilabo.riskassessmentservice.exceptions.InvalidPatientDataException;
+import org.medilabo.riskassessmentservice.exceptions.RiskNotFoundException;
 import org.medilabo.riskassessmentservice.model.RiskAssessment;
 import org.medilabo.riskassessmentservice.model.RiskLevel;
 import org.springframework.stereotype.Service;
@@ -43,21 +45,31 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
     );
     @Override
     public RiskAssessment assessPatientRisk(Long patientId) {
-        PatientDTO patient = patientClient.getPatient(patientId);
-        List<NoteDTO> notes = noteClient.getPatientNotes(patientId);
-        log.info("inside RiskAssessment assessing patient {}:", patientId );
+        try {
+            PatientDTO patient = patientClient.getPatient(patientId);
+            List<NoteDTO> notes = noteClient.getPatientNotes(patientId);
 
-        int age = calculateAge(patient.getDateOfBirth());
-        long triggerCount = countTriggers(notes);
-        RiskLevel riskLevel = calculateRiskLevel(patient, triggerCount);
+            if (patient.getDateOfBirth() == null) {
+                throw new InvalidPatientDataException(patientId, "date of birth");
+            }
 
-        return new RiskAssessment(
-                patient.getId(),
-                patient.getFirstName() + " " + patient.getLastName(),
-                age,
-                triggerCount,
-                riskLevel
-        );
+            int age = calculateAge(patient.getId(), patient.getDateOfBirth());
+            long triggerCount = countTriggers(notes);
+            RiskLevel riskLevel = calculateRiskLevel(patient, triggerCount);
+
+            return new RiskAssessment(
+                    patient.getId(),
+                    patient.getFirstName() + " " + patient.getLastName(),
+                    age,
+                    triggerCount,
+                    riskLevel
+            );
+        } catch (InvalidPatientDataException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Error assessing patient {}: {}", patientId, e.getMessage());
+            throw new RiskNotFoundException(patientId);
+        }
     }
     @Override
     public long countTriggers(List<NoteDTO> notes) {
@@ -80,7 +92,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             return RiskLevel.NONE;
         }
 
-        int age = calculateAge(patient.getDateOfBirth());
+        int age = calculateAge(patient.getId(), patient.getDateOfBirth());
         boolean isMale = "M".equals(patient.getGender());
 
         if (age > 30) {
@@ -98,7 +110,10 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
         return RiskLevel.NONE;
     }
 
-    private int calculateAge(LocalDate birthDate) {
+    private int calculateAge(long patientId, LocalDate birthDate) {
+        if (birthDate == null) {
+            throw new InvalidPatientDataException(patientId, "date of birth");
+        }
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
 }
