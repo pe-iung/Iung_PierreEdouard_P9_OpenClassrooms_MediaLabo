@@ -2,6 +2,7 @@ package org.medilabo.note.service;
 
 import lombok.RequiredArgsConstructor;
 import org.medilabo.note.dto.NoteDTO;
+import org.medilabo.note.exceptions.NoteNotFoundException;
 import org.medilabo.note.model.Note;
 import org.medilabo.note.repository.NoteRepository;
 import org.modelmapper.ModelMapper;
@@ -37,7 +38,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteDTO updateNote(String id, NoteDTO noteDTO) {
         Note existingNote = noteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Note not found"));
+                .orElseThrow(() -> new NoteNotFoundException(id));
 
         existingNote.setContent(noteDTO.getContent());
         existingNote.setUpdatedAt(LocalDateTime.now());
@@ -48,6 +49,9 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public void deleteNote(String id) {
+        if (!noteRepository.existsById(id)) {
+            throw new NoteNotFoundException(id);
+        }
         noteRepository.deleteById(id);
     }
 }
