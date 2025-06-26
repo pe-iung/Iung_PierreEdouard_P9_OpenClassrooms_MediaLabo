@@ -3,8 +3,10 @@ package org.medilabo.frontend.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.medilabo.frontend.backend.NoteServiceImpl;
+import org.medilabo.frontend.backend.PatientServiceImpl;
 import org.medilabo.frontend.dto.NoteDTO;
 import org.medilabo.frontend.exceptions.NoteNotFoundException;
+import org.medilabo.frontend.exceptions.PatientNotFoundException;
 import org.medilabo.frontend.exceptions.UIException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +20,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class NoteController {
 
     private final NoteServiceImpl noteServiceImpl;
+    private final PatientServiceImpl patientServiceImpl;
 
     @GetMapping
     public String listNotes(@PathVariable Long patientId, Model model, RedirectAttributes redirectAttributes) {
         try {
+            patientServiceImpl.getPatient(patientId);
             model.addAttribute("notes", noteServiceImpl.getPatientNotes(patientId));
             model.addAttribute("patientId", patientId);
             return "notes/list";
+        } catch (PatientNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/patients";
         } catch (UIException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/patients";
