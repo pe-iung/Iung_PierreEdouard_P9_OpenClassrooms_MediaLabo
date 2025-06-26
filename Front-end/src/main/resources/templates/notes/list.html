@@ -6,6 +6,17 @@
 </head>
 <body>
 <div class="container mt-5">
+
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> <span th:text="${error}">Error message</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${success}">Success message</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <h1 class="mb-4">Patient Notes</h1>
 
     <a th:href="@{/patients/{patientId}/notes/new(patientId=${patientId})}" class="btn btn-primary mb-3">Add New Note</a>
