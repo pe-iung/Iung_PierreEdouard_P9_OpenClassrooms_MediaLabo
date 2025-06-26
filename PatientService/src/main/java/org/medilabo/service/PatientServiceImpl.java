@@ -2,6 +2,8 @@ package org.medilabo.service;
 
 import lombok.NoArgsConstructor;
 import org.medilabo.dto.PatientRequest;
+
+import org.medilabo.exceptions.PatientNotFoundException;
 import org.medilabo.model.Patient;
 import org.medilabo.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,7 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public PatientRequest getPatient(Long id) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found with ID: " + id));
         return modelMapper.map(patient, PatientRequest.class);
     }
 
