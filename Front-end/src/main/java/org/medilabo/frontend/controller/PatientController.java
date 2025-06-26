@@ -89,7 +89,7 @@ public class PatientController {
             return "patients/risk";
         } catch (RiskAssessmentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/patients/" + id;
+            return "redirect:/patients";
         } catch (Exception e) {
             log.error("Unexpected error assessing risk for patient {}", id, e);
             redirectAttributes.addFlashAttribute("error", "An unexpected error occurred while assessing risk");

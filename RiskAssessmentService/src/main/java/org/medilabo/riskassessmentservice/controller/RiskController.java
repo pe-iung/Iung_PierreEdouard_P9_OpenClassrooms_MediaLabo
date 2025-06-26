@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.medilabo.riskassessmentservice.exceptions.InvalidPatientDataException;
+import org.medilabo.riskassessmentservice.exceptions.RiskNotFoundException;
 import org.medilabo.riskassessmentservice.model.RiskAssessment;
 import org.medilabo.riskassessmentservice.service.RiskAssessmentServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,13 @@ public class RiskController {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse(e.getMessage()));
-        } catch (Exception e) {
+        } catch (RiskNotFoundException e) {
+            log.warn("Risk patient not found with id : {}, error {}", patientId, e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(e.getMessage()));
+        }
+        catch (Exception e) {
             log.error("Error assessing patient {}: {}", patientId, e.getMessage());
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)

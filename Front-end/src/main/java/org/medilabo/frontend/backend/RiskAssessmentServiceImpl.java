@@ -24,7 +24,11 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             String errorMessage = extractErrorMessage(e);
             log.warn("Bad request while assessing patient {}: {}", patientId, errorMessage);
             throw new RiskAssessmentException(errorMessage);
-        } catch (Exception e) {
+        } catch (FeignException.NotFound e) {
+            String errorMessage = extractErrorMessage(e);
+            log.warn("patient with id {} was not found: {}", patientId, errorMessage);
+            throw new RiskAssessmentException(errorMessage);
+        }catch (Exception e) {
             log.error("Error assessing patient {}: {}", patientId, e.getMessage());
             throw new RiskAssessmentException("Unable to assess patient risk");
         }
