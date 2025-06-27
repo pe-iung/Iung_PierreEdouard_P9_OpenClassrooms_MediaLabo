@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ class PatientServiceImplTest {
         testPatient.setId(1L);
         testPatient.setFirstName("Test");
         testPatient.setLastName("User");
-        testPatient.setDateOfBirth(LocalDate.of(1990, 1, 1));
+        testPatient.setDateOfBirth(new Date(1990, 1, 1));
         testPatient.setGender(SexEnum.M);
 
         testPatientRequest = new PatientRequest(testPatient);

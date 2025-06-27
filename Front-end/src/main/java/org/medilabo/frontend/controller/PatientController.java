@@ -54,7 +54,9 @@ public class PatientController {
     public String editPatientForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
             log.info("Fetching patient for editing, id: {}", id);
+
             PatientDTO patient = patientServiceImpl.getPatient(id);
+            log.info("Patient date of birth received by front = {}", patient.getDateOfBirth());
             model.addAttribute("patient", patient);
             return "patients/form";
         } catch (PatientNotFoundException e) {

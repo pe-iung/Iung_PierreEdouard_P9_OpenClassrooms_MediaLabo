@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -52,7 +53,7 @@ class FrontEndControllerIT {
         testPatient.setId(1L);
         testPatient.setFirstName("John");
         testPatient.setLastName("Doe");
-        testPatient.setDateOfBirth(LocalDate.of(1990, 1, 1));
+        testPatient.setDateOfBirth(new Date(1990, 1, 1));
         testPatient.setGender("M");
         testPatient.setAddress("123 Test St");
         testPatient.setPhone("123-456-7890");

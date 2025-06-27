@@ -32,8 +32,14 @@
 
         <div class="mb-3">
             <label for="dateOfBirth" class="form-label">Date of Birth:</label>
-            <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}" required/>
+            <input type="date"
+                   class="form-control"
+                   id="dateOfBirth"
+                   th:field="*{dateOfBirth}"
+                   th:value="${patient.getDateOfBirth()}"
+                   required/>
         </div>
+
 
         <div class="mb-3">
             <label for="gender" class="form-label">Gender:</label>

@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +29,7 @@ class PatientRepositoryTest {
         Patient patient = new Patient();
         patient.setFirstName("John");
         patient.setLastName("Doe");
-        patient.setDateOfBirth(LocalDate.of(1990, 1, 1));
+        patient.setDateOfBirth(new Date(1990, 1, 1));
         patient.setGender(SexEnum.M);
 
         // When
@@ -45,7 +46,7 @@ class PatientRepositoryTest {
         Patient patient = new Patient();
         patient.setFirstName("Jane");
         patient.setLastName("Smith");
-        patient.setDateOfBirth(LocalDate.of(1985, 5, 15));
+        patient.setDateOfBirth(new Date(1990, 1, 1));
         patient.setGender(SexEnum.F);
         patientRepository.save(patient);
 

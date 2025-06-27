@@ -1,12 +1,16 @@
 package org.medilabo.exceptions.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
+import java.util.Date;
 
 @Table
 @Entity
@@ -24,7 +28,8 @@ public class Patient {
     private String lastName;
 
     @Past(message = "Date of birth must be in the past")
-    private LocalDate dateOfBirth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfBirth;
 
     @NotNull(message = "Gender is mandatory")
     @Enumerated(value = EnumType.STRING)

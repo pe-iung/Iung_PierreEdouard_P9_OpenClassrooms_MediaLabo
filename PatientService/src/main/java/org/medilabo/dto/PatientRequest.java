@@ -1,11 +1,14 @@
 package org.medilabo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.medilabo.exceptions.model.Patient;
 import org.medilabo.exceptions.model.SexEnum;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +16,8 @@ public class PatientRequest {
     private Long id;
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfBirth;
     private SexEnum gender;
     private String address;
     private String phone;

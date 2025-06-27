@@ -1,5 +1,6 @@
 package org.medilabo.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.medilabo.dto.PatientRequest;
 import org.medilabo.service.PatientService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/patients")
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class PatientController {
 
     @GetMapping("/{id}")
     public PatientRequest getPatient(@PathVariable Long id) {
+        log.info("inside patient Service, patient date of birth = {}", patientService.getPatient(id).getDateOfBirth());
         return patientService.getPatient(id);
     }
 

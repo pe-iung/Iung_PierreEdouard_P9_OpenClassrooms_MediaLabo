@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -44,7 +45,7 @@ class PatientControllerIT {
         testPatientRequest = new PatientRequest();
         testPatientRequest.setFirstName("John");
         testPatientRequest.setLastName("Doe");
-        testPatientRequest.setDateOfBirth(LocalDate.of(1990, 1, 1));
+        testPatientRequest.setDateOfBirth(new Date(1990,1,1));
         testPatientRequest.setGender(SexEnum.M);
 
         objectMapper.registerModule(new JavaTimeModule());
