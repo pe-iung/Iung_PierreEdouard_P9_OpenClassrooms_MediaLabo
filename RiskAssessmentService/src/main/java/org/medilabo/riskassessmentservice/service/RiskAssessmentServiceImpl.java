@@ -12,8 +12,11 @@ import org.medilabo.riskassessmentservice.model.RiskAssessment;
 import org.medilabo.riskassessmentservice.model.RiskLevel;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -110,10 +113,14 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
         return RiskLevel.NONE;
     }
 
-    private int calculateAge(long patientId, LocalDate birthDate) {
+    private int calculateAge(long patientId, Date birthDate) {
         if (birthDate == null) {
             throw new InvalidPatientDataException(patientId, "date of birth");
         }
-        return Period.between(birthDate, LocalDate.now()).getYears();
+        LocalDate birthLocalDate = birthDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        return Period.between(birthLocalDate, LocalDate.now()).getYears();
     }
 }
