@@ -34,6 +34,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/medilabo
       - SPRING_DATASOURCE_USERNAME=${MYSQL_ROOT_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - API_USERNAME=${API_USERNAME}
+      - API_PASSWORD=${API_PASSWORD}
     depends_on:
       - mysql
     networks:
@@ -48,6 +50,8 @@ services:
       - SPRING_DATA_MONGODB_HOST=mongodb
       - SPRING_DATA_MONGODB_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - SPRING_DATA_MONGODB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - API_USERNAME=${API_USERNAME}
+      - API_PASSWORD=${API_PASSWORD}
     depends_on:
       - mongodb
     networks:
@@ -87,11 +91,13 @@ services:
     ports:
       - "8084:8084"
     environment:
-      - GATEWAY_URL=http://gateway:8080
+      - NOTE_SERVICE_URL=http://note-service:8083
+      - PATIENT_SERVICE_URL=http://patient-service:8081
       - API_USERNAME=${API_USERNAME}
       - API_PASSWORD=${API_PASSWORD}
     depends_on:
-      - gateway
+      - note-service
+      - patient-service
     networks:
       - medilabo-network
 
