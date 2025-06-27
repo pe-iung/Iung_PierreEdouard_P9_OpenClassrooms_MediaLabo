@@ -1,10 +1,9 @@
 package org.medilabo.service;
 
-import lombok.NoArgsConstructor;
 import org.medilabo.dto.PatientRequest;
 
 import org.medilabo.exceptions.PatientNotFoundException;
-import org.medilabo.model.Patient;
+import org.medilabo.exceptions.model.Patient;
 import org.medilabo.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,7 +42,7 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public PatientRequest updatePatient(Long id, PatientRequest patientDTO) {
         if (!patientRepository.existsById(id)) {
-            throw new RuntimeException("Patient not found");
+            throw new PatientNotFoundException("Patient not found with ID: " + id);
         }
         Patient patient = modelMapper.map(patientDTO, Patient.class);
         patient.setId(id);
@@ -53,7 +52,10 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public void deletePatient(Long id) {
-        patientRepository.deleteById(id);
+        if (!patientRepository.existsById(id)) {
+            throw new PatientNotFoundException("Patient not found with ID: " + id);
+        }
+        else { patientRepository.deleteById(id);}
     }
 
     @Override

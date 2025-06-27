@@ -2,8 +2,8 @@ package org.medilabo.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.medilabo.model.Patient;
-import org.medilabo.model.SexEnum;
+import org.medilabo.exceptions.model.Patient;
+import org.medilabo.exceptions.model.SexEnum;
 
 import java.time.LocalDate;
 

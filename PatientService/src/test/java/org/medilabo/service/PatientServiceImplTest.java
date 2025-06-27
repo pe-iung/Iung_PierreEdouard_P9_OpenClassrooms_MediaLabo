@@ -1,14 +1,12 @@
 package org.medilabo.service;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.medilabo.dto.PatientRequest;
-import org.medilabo.model.Patient;
-import org.medilabo.model.SexEnum;
+import org.medilabo.exceptions.model.Patient;
+import org.medilabo.exceptions.model.SexEnum;
 import org.medilabo.repository.PatientRepository;
-import org.medilabo.service.PatientServiceImpl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;

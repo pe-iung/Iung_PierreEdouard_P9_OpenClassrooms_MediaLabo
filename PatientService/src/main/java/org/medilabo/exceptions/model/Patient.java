@@ -1,4 +1,4 @@
-package org.medilabo.model;
+package org.medilabo.exceptions.model;
 
 import jakarta.persistence.*;
 
@@ -7,7 +7,6 @@ import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Table
 @Entity
