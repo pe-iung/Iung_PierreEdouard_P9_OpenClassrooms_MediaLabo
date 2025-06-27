@@ -47,6 +47,18 @@ The application loads automatically:
 - 4 test patients with different risk profiles
 - 9 test notes with various medical observations
 
+API documentation and Testing
+---------
+Use the API credentials configured in .env file to log in.
+
+Patient microservice API documentation
+http://localhost:8081/swagger-ui/index.html
+
+Note microservice API documentation
+http://localhost:8083/swagger-ui/index.html
+
+Risk microservice API documentation
+http://localhost:8084/swagger-ui/index.html
 
 AUTHENTICATION
 -------------
