@@ -1,6 +1,6 @@
 package org.medilabo.repository;
 
-import org.medilabo.exceptions.model.Patient;
+import org.medilabo.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

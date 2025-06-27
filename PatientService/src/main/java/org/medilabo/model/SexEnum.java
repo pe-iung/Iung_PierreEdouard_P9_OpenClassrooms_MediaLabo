@@ -1,4 +1,4 @@
-package org.medilabo.exceptions.model;
+package org.medilabo.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

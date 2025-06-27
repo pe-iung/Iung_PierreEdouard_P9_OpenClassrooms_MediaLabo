@@ -3,7 +3,7 @@ package org.medilabo.service;
 import org.medilabo.dto.PatientRequest;
 
 import org.medilabo.exceptions.PatientNotFoundException;
-import org.medilabo.exceptions.model.Patient;
+import org.medilabo.model.Patient;
 import org.medilabo.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

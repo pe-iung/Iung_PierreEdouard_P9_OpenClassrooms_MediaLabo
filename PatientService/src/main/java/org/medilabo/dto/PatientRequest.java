@@ -1,13 +1,11 @@
 package org.medilabo.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.medilabo.exceptions.model.Patient;
-import org.medilabo.exceptions.model.SexEnum;
+import org.medilabo.model.Patient;
+import org.medilabo.model.SexEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Data

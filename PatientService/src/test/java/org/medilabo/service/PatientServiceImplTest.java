@@ -4,15 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.medilabo.dto.PatientRequest;
-import org.medilabo.exceptions.model.Patient;
-import org.medilabo.exceptions.model.SexEnum;
+import org.medilabo.model.Patient;
+import org.medilabo.model.SexEnum;
 import org.medilabo.repository.PatientRepository;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
