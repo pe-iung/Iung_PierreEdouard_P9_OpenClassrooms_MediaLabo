@@ -3,6 +3,8 @@ MEDILABO - DIABETES RISK ASSESSMENT APPLICATION
 
 A microservices-based application for assessing diabetes risk in patients.
 
+![Image](https://github.com/user-attachments/assets/e25d3f24-34a1-4b36-b89f-d91f0e3f5284)
+
 SERVICES
 --------
 Frontend (port 8082): Web interface
