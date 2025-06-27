@@ -5,8 +5,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Document(collection = "notes")
@@ -21,7 +25,12 @@ public class Note {
     @NotBlank(message = "Content cannot be empty")
     private String content;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime updatedAt = LocalDateTime.now();
+//    private LocalDateTime createdAt = LocalDateTime.now();
+//    private LocalDateTime updatedAt = LocalDateTime.now();
+    @CreatedDate
+    private Instant createdAt;
+
+    @LastModifiedDate
+    private Instant updatedAt;
 
 }

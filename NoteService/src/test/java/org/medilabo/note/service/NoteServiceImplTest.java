@@ -42,15 +42,15 @@ class NoteServiceImplTest {
         testNote.setId("1");
         testNote.setPatientId(1L);
         testNote.setContent("Test note");
-        testNote.setCreatedAt(LocalDateTime.now());
-        testNote.setUpdatedAt(LocalDateTime.now());
+//        testNote.setCreatedAt(LocalDateTime.now());
+//        testNote.setUpdatedAt(LocalDateTime.now());
 
         testNoteDTO = new NoteDTO();
         testNoteDTO.setId("1L");
         testNoteDTO.setPatientId(1L);
         testNoteDTO.setContent("Test note");
-        testNoteDTO.setCreatedAt(testNote.getCreatedAt());
-        testNoteDTO.setUpdatedAt(testNote.getUpdatedAt());
+//        testNoteDTO.setCreatedAt(testNote.getCreatedAt());
+//        testNoteDTO.setUpdatedAt(testNote.getUpdatedAt());
     }
 
     @Test

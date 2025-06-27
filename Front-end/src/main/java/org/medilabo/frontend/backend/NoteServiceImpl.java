@@ -29,6 +29,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteDTO addNote(NoteDTO note) {
         try {
+            log.info("note added toString = {} :",note.toString());
             return noteClient.addNote(note);
         } catch (Exception e) {
             log.error("Error adding note: {}", e.getMessage());

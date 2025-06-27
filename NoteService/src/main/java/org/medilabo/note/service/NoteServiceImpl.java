@@ -41,7 +41,7 @@ public class NoteServiceImpl implements NoteService {
                 .orElseThrow(() -> new NoteNotFoundException(id));
 
         existingNote.setContent(noteDTO.getContent());
-        existingNote.setUpdatedAt(LocalDateTime.now());
+        //existingNote.setUpdatedAt(LocalDateTime.now());
 
         Note updatedNote = noteRepository.save(existingNote);
         return modelMapper.map(updatedNote, NoteDTO.class);

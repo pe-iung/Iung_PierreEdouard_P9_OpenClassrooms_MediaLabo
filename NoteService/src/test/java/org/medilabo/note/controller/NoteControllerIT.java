@@ -45,8 +45,8 @@ class NoteControllerIT {
         testNoteDTO.setId("1");
         testNoteDTO.setPatientId(1L);
         testNoteDTO.setContent("Test note content");
-        testNoteDTO.setCreatedAt(LocalDateTime.now());
-        testNoteDTO.setUpdatedAt(LocalDateTime.now());
+//        testNoteDTO.setCreatedAt(LocalDateTime.now());
+//        testNoteDTO.setUpdatedAt(LocalDateTime.now());
 
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());

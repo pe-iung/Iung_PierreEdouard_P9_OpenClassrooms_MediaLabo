@@ -63,8 +63,8 @@ class FrontEndControllerIT {
         testNote.setId("1");
         testNote.setPatientId(1L);
         testNote.setContent("Test note content");
-        testNote.setCreatedAt(LocalDateTime.now());
-        testNote.setUpdatedAt(LocalDateTime.now());
+//        testNote.setCreatedAt(LocalDateTime.now());
+//        testNote.setUpdatedAt(LocalDateTime.now());
     }
 
     // Patient Controller Tests
