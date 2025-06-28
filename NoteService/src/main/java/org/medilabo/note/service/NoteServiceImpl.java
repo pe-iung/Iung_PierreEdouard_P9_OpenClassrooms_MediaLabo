@@ -23,10 +23,10 @@ public class NoteServiceImpl implements NoteService {
     private final ModelMapper modelMapper;
 
     @Override
-    public ResponseEntity<List<NoteDTO>> getPatientNotes(Long patientId) {
-        List<NoteDTO> notes = noteRepository.findByPatientIdOrderByCreatedAtDesc(patientId)
+    public ResponseEntity<List<NoteCreatedResponse>> getPatientNotes(Long patientId) {
+        List<NoteCreatedResponse> notes = noteRepository.findByPatientIdOrderByCreatedAtDesc(patientId)
                 .stream()
-                .map(note -> modelMapper.map(note, NoteDTO.class))
+                .map(note -> modelMapper.map(note, NoteCreatedResponse.class))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(notes);
     }

@@ -19,7 +19,7 @@ public class NoteController {
     private final NoteService noteService;
 
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<NoteDTO>> getPatientNotes(@PathVariable Long patientId) {
+    public ResponseEntity<List<NoteCreatedResponse>> getPatientNotes(@PathVariable Long patientId) {
         return noteService.getPatientNotes(patientId);
     }
 

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface NoteService {
-    ResponseEntity<List<NoteDTO>> getPatientNotes(Long patientId);
+    ResponseEntity<List<NoteCreatedResponse>> getPatientNotes(Long patientId);
     ResponseEntity<NoteCreatedResponse> addNote(CreateNoteRequest createNoteRequest);
     ResponseEntity<NoteCreatedResponse> updateNote(String id, UpdateNoteRequest updateNoteRequest);
     ResponseEntity<Void> deleteNote(String id);
