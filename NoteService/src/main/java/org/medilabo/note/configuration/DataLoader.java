@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.medilabo.note.dto.CreateNoteRequest;
 import org.medilabo.note.dto.NoteDTO;
 import org.medilabo.note.service.NoteService;
 import org.springframework.boot.CommandLineRunner;
@@ -31,9 +32,9 @@ public class DataLoader {
                 mongoTemplate.dropCollection("notes");
 
                 ClassPathResource resource = new ClassPathResource("notes.json");
-                List<NoteDTO> notes = objectMapper.readValue(
+                List<CreateNoteRequest> notes = objectMapper.readValue(
                         resource.getInputStream(),
-                        new TypeReference<List<NoteDTO>>() {}
+                        new TypeReference<List<CreateNoteRequest>>() {}
                 );
 
                 log.info("Loading {} test notes", notes.size());

@@ -1,15 +1,19 @@
 package org.medilabo.frontend.backend;
 
 import org.medilabo.frontend.dto.NoteDTO;
+import org.medilabo.frontend.dto.note.CreateNoteRequest;
+import org.medilabo.frontend.dto.note.NoteCreatedResponse;
+import org.medilabo.frontend.dto.note.NoteUpdatedResponse;
+import org.medilabo.frontend.dto.note.UpdateNoteRequest;
 
 import java.util.List;
 
 public interface NoteService {
-    List<NoteDTO> getPatientNotes(Long patientId);
+    List<NoteCreatedResponse> getPatientNotes(Long patientId);
 
-    NoteDTO addNote(NoteDTO note);
+    NoteCreatedResponse addNote(CreateNoteRequest note);
 
-    NoteDTO updateNote(String id, NoteDTO note);
+    NoteUpdatedResponse updateNote(String id, UpdateNoteRequest note);
 
     void deleteNote(String id);
 }

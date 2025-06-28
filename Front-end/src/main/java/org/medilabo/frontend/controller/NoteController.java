@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.medilabo.frontend.backend.NoteServiceImpl;
 import org.medilabo.frontend.backend.PatientServiceImpl;
 import org.medilabo.frontend.dto.NoteDTO;
+import org.medilabo.frontend.dto.note.CreateNoteRequest;
+import org.medilabo.frontend.dto.note.UpdateNoteRequest;
 import org.medilabo.frontend.exceptions.NoteNotFoundException;
 import org.medilabo.frontend.exceptions.PatientNotFoundException;
 import org.medilabo.frontend.exceptions.UIException;
@@ -47,7 +49,7 @@ public class NoteController {
     }
 
     @PostMapping
-    public String createNote(@PathVariable Long patientId, @ModelAttribute NoteDTO note, RedirectAttributes redirectAttributes) {
+    public String createNote(@PathVariable Long patientId, @ModelAttribute CreateNoteRequest note, RedirectAttributes redirectAttributes) {
         try {
             note.setPatientId(patientId);
             noteServiceImpl.addNote(note);
@@ -66,6 +68,7 @@ public class NoteController {
                     .filter(n -> n.getId().equals(id))
                     .findFirst()
                     .orElseThrow(() -> new NoteNotFoundException(id)));
+            model.addAttribute("patientId", patientId);
             return "notes/form";
         } catch (NoteNotFoundException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -74,9 +77,9 @@ public class NoteController {
     }
 
     @PostMapping("/{id}")
-    public String updateNote(@PathVariable Long patientId, @PathVariable String id, @ModelAttribute NoteDTO note, RedirectAttributes redirectAttributes) {
+    public String updateNote(@PathVariable Long patientId, @PathVariable String id, @ModelAttribute UpdateNoteRequest note, RedirectAttributes redirectAttributes) {
         try {
-            note.setPatientId(patientId);
+            //note.setPatientId(patientId);
             noteServiceImpl.updateNote(id, note);
             redirectAttributes.addFlashAttribute("success", "Note updated successfully");
             return "redirect:/patients/" + patientId + "/notes";

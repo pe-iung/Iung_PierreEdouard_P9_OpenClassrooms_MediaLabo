@@ -4,6 +4,10 @@ import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.medilabo.frontend.dto.NoteDTO;
+import org.medilabo.frontend.dto.note.CreateNoteRequest;
+import org.medilabo.frontend.dto.note.NoteCreatedResponse;
+import org.medilabo.frontend.dto.note.NoteUpdatedResponse;
+import org.medilabo.frontend.dto.note.UpdateNoteRequest;
 import org.medilabo.frontend.exceptions.FrontendServiceException;
 import org.medilabo.frontend.exceptions.NoteNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,7 +21,7 @@ public class NoteServiceImpl implements NoteService {
     private final NoteClient noteClient;
 
     @Override
-    public List<NoteDTO> getPatientNotes(Long patientId) {
+    public List<NoteCreatedResponse> getPatientNotes(Long patientId) {
         try {
             return noteClient.getPatientNotes(patientId);
         } catch (Exception e) {
@@ -27,7 +31,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public NoteDTO addNote(NoteDTO note) {
+    public NoteCreatedResponse addNote(CreateNoteRequest note) {
         try {
             log.info("note added toString = {} :",note.toString());
             return noteClient.addNote(note);
@@ -38,7 +42,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public NoteDTO updateNote(String id, NoteDTO note) {
+    public NoteUpdatedResponse updateNote(String id, UpdateNoteRequest note) {
         try {
             return noteClient.updateNote(id, note);
         } catch (FeignException.NotFound e) {

@@ -3,7 +3,6 @@ package org.medilabo.note.dto;
 import lombok.Data;
 
 @Data
-public class CreateNoteRequest {
-    private Long patientId;
+public class UpdateNoteRequest {
     private String content;
 }

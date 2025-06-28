@@ -1,12 +1,16 @@
-package org.medilabo.note.dto;
+package org.medilabo.frontend.dto.note;
 
 import lombok.Data;
 
 import java.time.Instant;
 
 @Data
-public class NoteCreatedResponse {
+public class NoteUpdatedResponse {
+
+
     private String content;
     private Instant createdAt;
-    private  Instant updatedAt;
+    private Instant updatedAt;
+
+
 }
