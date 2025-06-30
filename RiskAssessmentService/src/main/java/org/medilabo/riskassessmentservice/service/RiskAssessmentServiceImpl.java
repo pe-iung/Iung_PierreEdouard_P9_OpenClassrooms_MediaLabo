@@ -35,7 +35,6 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             "anormal",
             "anticorps",
             "cholestérol",
-            "fumer",
             "fumeur",
             "fumeuse",
             "hémoglobine a1c",
@@ -106,8 +105,9 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             if (triggerCount >= 5) return RiskLevel.EARLY_ONSET;
             if (triggerCount >= 3) return RiskLevel.IN_DANGER;
         } else {
-            if (triggerCount >= 5) return RiskLevel.EARLY_ONSET;
             if (triggerCount >= 7) return RiskLevel.IN_DANGER;
+            if (triggerCount >= 5) return RiskLevel.EARLY_ONSET;
+
         }
 
         return RiskLevel.NONE;
