@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,8 +36,10 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             "anormal",
             "anticorps",
             "cholestérol",
-            "fumeur",
-            "fumeuse",
+            //"fumer",
+            "(?:fum(?:e(?:ur|use)|er))",
+//            "fumeur",
+//            "fumeuse",
             "hémoglobine a1c",
             "microalbumine",
             "poids",
@@ -73,6 +76,21 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             throw new RiskNotFoundException(patientId);
         }
     }
+//    @Override
+//    public long countTriggers(List<NoteDTO> notes) {
+//        if (notes == null || notes.isEmpty()) {
+//            return 0;
+//        }
+//
+//        String allNotes = notes.stream()
+//                .map(note -> note.getContent().toLowerCase())
+//                .collect(Collectors.joining(" "));
+//
+//        return TRIGGER_TERMS.stream()
+//                .filter(allNotes::contains)
+//                .count();
+//    }
+
     @Override
     public long countTriggers(List<NoteDTO> notes) {
         if (notes == null || notes.isEmpty()) {
@@ -84,10 +102,34 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
                 .collect(Collectors.joining(" "));
 
         return TRIGGER_TERMS.stream()
-                .filter(allNotes::contains)
+                .filter(term -> Pattern.compile(term).matcher(allNotes).find())
                 .count();
     }
 
+    /**
+    Les règles pour déterminer les niveaux de risque sont les suivantes :
+
+        //// NONE ////
+        - aucun risque (None) : Le dossier du patient ne contient aucune note du médecin
+        contenant les déclencheurs (terminologie) ;
+
+        //// BORDERLINE ////
+        - risque limité (Borderline) : Le dossier du patient contient entre deux et cinq
+            déclencheurs et le patient est âgé de plus de 30 ans ;
+
+        //// IN DANGER ////
+        - danger (In Danger) : Dépend de l'âge et du sexe du patient. Si le patient est un homme
+            de moins de 30 ans, alors trois termes déclencheurs doivent être présents.
+            Si le patient est une femme et a moins de 30 ans, il faudra quatre termes déclencheurs.
+            Si le patient a plus de 30 ans, alors il en faudra six ou sept ;
+
+        //// EARLY ONSET ////
+        - apparition précoce (Early onset) : Encore une fois, cela dépend de l'âge et du sexe.
+            Si le patient est un homme de moins de 30 ans, alors au moins cinq termes déclencheurs sont nécessaires.
+            Si le patient est une femme et a moins de 30 ans, il faudra au moins sept termes déclencheurs.
+            Si le patient a plus de 30 ans, alors il en faudra huit ou plus.
+
+     */
     @Override
     public RiskLevel calculateRiskLevel(PatientDTO patient, long triggerCount) {
         if (triggerCount == 0) {
@@ -105,8 +147,8 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             if (triggerCount >= 5) return RiskLevel.EARLY_ONSET;
             if (triggerCount >= 3) return RiskLevel.IN_DANGER;
         } else {
-            if (triggerCount >= 7) return RiskLevel.IN_DANGER;
-            if (triggerCount >= 5) return RiskLevel.EARLY_ONSET;
+            if (triggerCount >= 7) return RiskLevel.EARLY_ONSET;
+            if (triggerCount >= 4) return RiskLevel.IN_DANGER;
 
         }
 

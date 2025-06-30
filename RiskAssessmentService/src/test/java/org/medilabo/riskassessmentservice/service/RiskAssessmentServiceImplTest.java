@@ -118,11 +118,11 @@ class RiskAssessmentServiceImplTest {
         assertEquals(RiskLevel.EARLY_ONSET, riskService.calculateRiskLevel(under30MalePatient, 5));
 
         // Under 30 female risk levels
-        assertEquals(RiskLevel.NONE, riskService.calculateRiskLevel(under30FemalePatient, 4));
-        assertEquals(RiskLevel.IN_DANGER, riskService.calculateRiskLevel(under30FemalePatient, 7));
-        assertEquals(RiskLevel.EARLY_ONSET, riskService.calculateRiskLevel(under30FemalePatient, 5));
-        assertEquals(RiskLevel.EARLY_ONSET, riskService.calculateRiskLevel(under30FemalePatient, 6));
-        assertEquals(RiskLevel.IN_DANGER, riskService.calculateRiskLevel(under30FemalePatient, 8));
+        assertEquals(RiskLevel.IN_DANGER, riskService.calculateRiskLevel(under30FemalePatient, 4));
+        assertEquals(RiskLevel.EARLY_ONSET, riskService.calculateRiskLevel(under30FemalePatient, 7));
+        assertEquals(RiskLevel.IN_DANGER, riskService.calculateRiskLevel(under30FemalePatient, 5));
+        assertEquals(RiskLevel.IN_DANGER, riskService.calculateRiskLevel(under30FemalePatient, 6));
+        assertEquals(RiskLevel.EARLY_ONSET, riskService.calculateRiskLevel(under30FemalePatient, 8));
     }
 
     @Test

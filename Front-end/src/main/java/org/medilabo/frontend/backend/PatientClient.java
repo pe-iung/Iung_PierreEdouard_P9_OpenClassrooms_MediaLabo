@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Feign client interface for making HTTP requests to the Patient service through the API gateway.
+ * Handles all patient-related API calls.
+ */
 @FeignClient(name = "patientClient", url = "${gateway.url}")
 public interface PatientClient {
 

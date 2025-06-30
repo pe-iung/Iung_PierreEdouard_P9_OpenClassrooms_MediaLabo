@@ -8,6 +8,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+/**
+ * Feign client interface for making HTTP requests to the Note service through the API gateway.
+ * Handles all note-related API calls.
+ */
 @FeignClient(name = "noteClient", url = "${gateway.url}")
 public interface NoteClient {
 

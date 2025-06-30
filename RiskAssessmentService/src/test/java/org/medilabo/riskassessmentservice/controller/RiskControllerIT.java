@@ -190,7 +190,7 @@ class RiskControllerIT {
                 .andExpect(jsonPath("$.patientId").value(4))
                 .andExpect(jsonPath("$.patientName").value("Test TestEarlyOnset"))
                 .andExpect(jsonPath("$.riskLevel").value("EARLY_ONSET"))
-                .andExpect(jsonPath("$.triggerCount").value(6));
+                .andExpect(jsonPath("$.triggerCount").value(7));
     }
 
 
