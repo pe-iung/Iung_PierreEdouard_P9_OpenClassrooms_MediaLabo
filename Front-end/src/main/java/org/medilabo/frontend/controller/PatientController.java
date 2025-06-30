@@ -3,15 +3,22 @@ package org.medilabo.frontend.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.medilabo.frontend.backend.PatientServiceImpl;
 import org.medilabo.frontend.backend.RiskAssessmentServiceImpl;
-import org.medilabo.frontend.dto.PatientDTO;
+import org.medilabo.frontend.dto.patient.PatientResponse;
 import org.medilabo.frontend.dto.RiskAssessmentDTO;
+import org.medilabo.frontend.dto.patient.UpsertPatientRequest;
 import org.medilabo.frontend.exceptions.PatientNotFoundException;
 import org.medilabo.frontend.exceptions.RiskAssessmentException;
 import org.medilabo.frontend.exceptions.UIException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -40,14 +47,29 @@ public class PatientController {
 
     @GetMapping("/new")
     public String newPatientForm(Model model) {
-        model.addAttribute("patient", new PatientDTO());
+        model.addAttribute("patient", new UpsertPatientRequest());
         return "patients/form";
     }
 
+
     @PostMapping
-    public String createPatient(@ModelAttribute PatientDTO patient) {
-        patientServiceImpl.createPatient(patient);
-        return "redirect:/patients";
+    public String createPatient(
+            @Validated @ModelAttribute("patient") UpsertPatientRequest patient,
+            BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("patient", patient);
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "patients/form";
+        }
+
+        try {
+            patientServiceImpl.createPatient(patient);
+            return "redirect:/patients";
+        } catch (RuntimeException e) {
+            model.addAttribute("error", e.getMessage());
+            return "patients/form";
+        }
     }
 
     @GetMapping("/{id}/edit")
@@ -55,7 +77,7 @@ public class PatientController {
         try {
             log.info("Fetching patient for editing, id: {}", id);
 
-            PatientDTO patient = patientServiceImpl.getPatient(id);
+            PatientResponse patient = patientServiceImpl.getPatient(id);
             log.info("Patient date of birth received by front = {}", patient.getDateOfBirth());
             model.addAttribute("patient", patient);
             return "patients/form";
@@ -71,9 +93,24 @@ public class PatientController {
     }
 
     @PostMapping("/{id}")
-    public String updatePatient(@PathVariable Long id, @ModelAttribute PatientDTO patient) {
-        patientServiceImpl.updatePatient(id, patient);
-        return "redirect:/patients";
+    public String updatePatient(@PathVariable Long id,
+                                @Validated @ModelAttribute("patient") UpsertPatientRequest patient,
+                                BindingResult bindingResult,
+                                Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("id",id);
+            model.addAttribute("patient", patient);
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "patients/form";
+        }
+
+        try {
+            patientServiceImpl.updatePatient(id, patient);
+            return "redirect:/patients";
+        } catch (RuntimeException e) {
+            model.addAttribute("error", e.getMessage());
+            return "patients/form";
+        }
     }
 
     @GetMapping("/{id}/delete")
@@ -85,7 +122,7 @@ public class PatientController {
     public String showRiskAssessment(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
             RiskAssessmentDTO risk = riskAssessmentServiceImpl.assessPatient(id);
-            PatientDTO patient = patientServiceImpl.getPatient(id);
+            PatientResponse patient = patientServiceImpl.getPatient(id);
             model.addAttribute("risk", risk);
             model.addAttribute("patient", patient);
             return "patients/risk";

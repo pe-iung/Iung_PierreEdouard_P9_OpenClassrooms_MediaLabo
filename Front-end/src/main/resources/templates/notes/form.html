@@ -6,9 +6,9 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4" th:text="${note.id} ? 'Edit Note' : 'New Note'"></h1>
+    <h1 class="mb-4" th:text="${noteId} ? 'Edit Note' : 'New Note'"></h1>
 
-    <form th:action="${note.id} ? @{/patients/{patientId}/notes/{id}(patientId=${patientId},id=${note.id})}
+    <form th:action="${noteId} ? @{/patients/{patientId}/notes/{id}(patientId=${patientId},id=${noteId})}
                                : @{/patients/{patientId}/notes(patientId=${patientId})}"
           th:object="${note}" method="post" class="needs-validation" novalidate>
 

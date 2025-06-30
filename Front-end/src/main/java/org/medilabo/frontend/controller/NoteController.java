@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.medilabo.frontend.backend.NoteServiceImpl;
 import org.medilabo.frontend.backend.PatientServiceImpl;
-import org.medilabo.frontend.dto.NoteDTO;
 import org.medilabo.frontend.dto.note.CreateNoteRequest;
 import org.medilabo.frontend.dto.note.UpdateNoteRequest;
 import org.medilabo.frontend.exceptions.NoteNotFoundException;
@@ -42,7 +41,7 @@ public class NoteController {
 
     @GetMapping("/new")
     public String newNoteForm(@PathVariable Long patientId, Model model) {
-        NoteDTO note = new NoteDTO();
+        CreateNoteRequest note = new CreateNoteRequest();
         note.setPatientId(patientId);
         model.addAttribute("note", note);
         return "notes/form";
@@ -69,6 +68,7 @@ public class NoteController {
                     .findFirst()
                     .orElseThrow(() -> new NoteNotFoundException(id)));
             model.addAttribute("patientId", patientId);
+            model.addAttribute("noteId", id);
             return "notes/form";
         } catch (NoteNotFoundException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());

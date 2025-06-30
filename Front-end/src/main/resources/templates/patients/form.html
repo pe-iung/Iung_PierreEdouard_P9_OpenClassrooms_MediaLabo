@@ -15,22 +15,79 @@
         <span th:text="${success}">Success message</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <h1 class="mb-4" th:text="${patient.id} ? 'Edit Patient' : 'New Patient'"></h1>
+    <h1 class="mb-4" th:text="${id} ? 'Edit Patient' : 'New Patient'"></h1>
 
-    <form th:action="${patient.id} ? @{/patients/{id}(id=${patient.id})} : @{/patients}"
+    <form th:action="${id} ? @{/patients/{id}(id=${id})} : @{/patients}"
           th:object="${patient}" method="post" class="needs-validation" novalidate>
+
+        <div th:if="${errorMessage}" class="alert-danger">
+            <span th:text="${errorMessage}" />
+        </div>
+        <div th:if="${errorMessages}" class="alert-danger">
+            <ul>
+                <li th:each="msg : ${errorMessages}"><span th:text="msg"></span> </li>
+            </ul>
+        </div>
 
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name:</label>
-            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required/>
+            <input type="text"
+                   class="form-control"
+                   th:class="${#fields.hasErrors('firstName')} ? 'form-control is-invalid' : 'form-control'"
+                   id="firstName"
+                   th:field="*{firstName}">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}"
+                 th:errors="*{firstName}">
+                First name is mandatory
+            </div>
         </div>
 
         <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name:</label>
-            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required/>
+            <label for="lastName" class="form-label">last name:</label>
+            <input type="text"
+                   class="form-control"
+                   th:class="${#fields.hasErrors('lastName')} ? 'form-control is-invalid' : 'form-control'"
+                   id="lastName"
+                   th:field="*{lastName}">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}"
+                 th:errors="*{lastName}">
+                last name is mandatory
+            </div>
         </div>
 
         <div class="mb-3">
+            <label for="dateOfBirth" class="form-label">Date of Birth:</label>
+            <input type="date"
+                   class="form-control"
+                   th:class="${#fields.hasErrors('dateOfBirth')} ? 'form-control is-invalid' : 'form-control'"
+                   id="dateOfBirth"
+                   th:field="*{dateOfBirth}"
+                   th:value="${patient.getDateOfBirth()}"
+                   required/>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfBirth')}"
+                 th:errors="*{dateOfBirth}">
+                Date of birth is mandatory
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender:</label>
+            <select class="form-select"
+                    th:class="${#fields.hasErrors('gender')} ? 'form-select is-invalid' : 'form-select'"
+                    id="gender"
+                    th:field="*{gender}"
+                    required>
+                <option value="" disabled selected>Select gender</option>
+                <option th:value="M">Male</option>
+                <option th:value="F">Female</option>
+            </select>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('gender')}"
+                 th:errors="*{gender}">
+                Gender is mandatory
+            </div>
+        </div>
+
+        <!--<div class="mb-3">
             <label for="dateOfBirth" class="form-label">Date of Birth:</label>
             <input type="date"
                    class="form-control"
@@ -47,7 +104,7 @@
                 <option value="M">Male</option>
                 <option value="F">Female</option>
             </select>
-        </div>
+        </div>-->
 
         <div class="mb-3">
             <label for="address" class="form-label">Address:</label>
