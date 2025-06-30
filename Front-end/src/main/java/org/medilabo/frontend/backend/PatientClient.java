@@ -1,6 +1,7 @@
 package org.medilabo.frontend.backend;
 
-import org.medilabo.frontend.dto.PatientDTO;
+import org.medilabo.frontend.dto.patient.PatientResponse;
+import org.medilabo.frontend.dto.patient.UpsertPatientRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,16 +11,16 @@ import java.util.List;
 public interface PatientClient {
 
     @GetMapping("/api/patients")
-    List<PatientDTO> getAllPatients();
+    List<PatientResponse> getAllPatients();
 
     @GetMapping("/api/patients/{id}")
-    PatientDTO getPatient(@PathVariable("id") Long id);
+    PatientResponse getPatient(@PathVariable("id") Long id);
 
     @PostMapping("/api/patients")
-    PatientDTO createPatient(@RequestBody PatientDTO patient);
+    PatientResponse createPatient(@RequestBody UpsertPatientRequest patient);
 
     @PutMapping("/api/patients/{id}")
-    void updatePatient(@PathVariable("id") Long id, @RequestBody PatientDTO patient);
+    void updatePatient(@PathVariable("id") Long id, @RequestBody UpsertPatientRequest patient);
 
     @DeleteMapping("/api/patients/{id}")
     void deletePatient(@PathVariable("id") Long id);

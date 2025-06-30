@@ -2,6 +2,7 @@ package org.medilabo.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.medilabo.dto.PatientRequest;
+import org.medilabo.dto.PatientResponse;
 import org.medilabo.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,32 +20,32 @@ public class PatientController {
     private final PatientService patientService;
 
     @GetMapping
-    public List<PatientRequest> getAllPatients() {
-        return patientService.getAllPatients();
+    public ResponseEntity<List<PatientResponse>> getAllPatients() {
+        return ResponseEntity.ok().body(patientService.getAllPatients());
     }
 
     @GetMapping("/{id}")
-    public PatientRequest getPatient(@PathVariable Long id) {
+    public ResponseEntity<PatientResponse> getPatient(@PathVariable Long id) {
         log.info("inside patient Service, patient date of birth = {}", patientService.getPatient(id).getDateOfBirth());
-        return patientService.getPatient(id);
+        return ResponseEntity.ok().body(patientService.getPatient(id));
     }
 
     @PostMapping
-    public PatientRequest createPatient(@Valid @RequestBody PatientRequest PatientRequest) {
-        return patientService.createPatient(PatientRequest);
+    public ResponseEntity<PatientResponse> createPatient(@Valid @RequestBody PatientRequest PatientRequest) {
+        return ResponseEntity.ok().body(patientService.createPatient(PatientRequest));
     }
 
     @PostMapping("/batch")
-    public List<PatientRequest> createPatients(@RequestBody List<PatientRequest> patients) {
-        return patients.stream()
+    public ResponseEntity<List<PatientResponse>> createPatients(@RequestBody List<PatientRequest> patients) {
+        return ResponseEntity.ok().body(patients.stream()
                 .map(patientService::createPatient)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @PutMapping("/{id}")
-    public PatientRequest updatePatient(@PathVariable Long id,
+    public ResponseEntity<PatientResponse> updatePatient(@PathVariable Long id,
                                     @Valid @RequestBody PatientRequest PatientRequest) {
-        return patientService.updatePatient(id, PatientRequest);
+        return ResponseEntity.ok().body(patientService.updatePatient(id, PatientRequest));
     }
 
     @DeleteMapping("/{id}")

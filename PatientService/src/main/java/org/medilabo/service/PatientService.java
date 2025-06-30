@@ -1,17 +1,18 @@
 package org.medilabo.service;
 
 import org.medilabo.dto.PatientRequest;
+import org.medilabo.dto.PatientResponse;
 
 import java.util.List;
 
 public interface PatientService {
-    List<PatientRequest> getAllPatients();
+    List<PatientResponse> getAllPatients();
 
-    PatientRequest getPatient(Long id);
+    PatientResponse getPatient(Long id);
 
-    PatientRequest createPatient(PatientRequest PatientRequest);
+    PatientResponse createPatient(PatientRequest patientRequest);
 
-    PatientRequest updatePatient(Long id, PatientRequest patientDTO);
+    PatientResponse updatePatient(Long id, PatientRequest patientRequest);
 
     void deletePatient(Long id);
 

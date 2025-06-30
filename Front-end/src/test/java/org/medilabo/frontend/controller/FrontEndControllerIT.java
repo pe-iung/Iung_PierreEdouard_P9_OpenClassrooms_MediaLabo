@@ -4,14 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.medilabo.frontend.backend.NoteServiceImpl;
 import org.medilabo.frontend.backend.PatientServiceImpl;
-import org.medilabo.frontend.dto.PatientDTO;
+import org.medilabo.frontend.dto.patient.PatientResponse;
 import org.medilabo.frontend.dto.note.CreateNoteRequest;
 import org.medilabo.frontend.dto.note.NoteCreatedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Date;
@@ -44,7 +43,7 @@ class FrontEndControllerIT {
     @MockBean
     private NoteServiceImpl noteServiceImpl;
 
-    private PatientDTO testPatient;
+    private PatientResponse testPatient;
     private NoteCreatedResponse testNote;
     private CreateNoteRequest createNoteRequest;
 
@@ -56,7 +55,7 @@ class FrontEndControllerIT {
                 .build();
 
         // Setup test patient
-        testPatient = new PatientDTO();
+        testPatient = new PatientResponse();
         testPatient.setId(1L);
         testPatient.setFirstName("John");
         testPatient.setLastName("Doe");

@@ -1,12 +1,11 @@
 package org.medilabo.frontend.backend;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.medilabo.frontend.dto.ErrorResponseDTO;
-import org.medilabo.frontend.dto.PatientDTO;
+import org.medilabo.frontend.dto.patient.PatientResponse;
+import org.medilabo.frontend.dto.patient.UpsertPatientRequest;
 import org.medilabo.frontend.exceptions.FrontendServiceException;
 import org.medilabo.frontend.exceptions.PatientNotFoundException;
 import org.medilabo.frontend.exceptions.UIException;
@@ -22,7 +21,7 @@ public class PatientServiceImpl implements PatientService{
     private final ObjectMapper objectMapper;
 
     @Override
-    public List<PatientDTO> getAllPatients() {
+    public List<PatientResponse> getAllPatients() {
         try {
             return patientClient.getAllPatients();
         } catch (FeignException.NotFound e) {
@@ -35,7 +34,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public PatientDTO getPatient(Long id) {
+    public PatientResponse getPatient(Long id) {
         try {
             return patientClient.getPatient(id);
         } catch (FeignException.NotFound e) {
@@ -50,12 +49,12 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public PatientDTO createPatient(PatientDTO patient) {
+    public PatientResponse createPatient(UpsertPatientRequest patient) {
         return patientClient.createPatient(patient);
     }
 
     @Override
-    public void updatePatient(Long id, PatientDTO patient) {
+    public void updatePatient(Long id, UpsertPatientRequest patient) {
         patientClient.updatePatient(id, patient);
     }
 

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.MediaType;
 import org.medilabo.dto.PatientRequest;
+import org.medilabo.dto.PatientResponse;
 import org.medilabo.model.SexEnum;
 import org.medilabo.service.PatientService;
 import org.mockito.Mock;
@@ -37,6 +38,7 @@ class PatientControllerIT {
     private PatientService patientService;
 
     private PatientRequest testPatientRequest;
+    private PatientResponse testPatientResponse;
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
@@ -47,12 +49,18 @@ class PatientControllerIT {
         testPatientRequest.setDateOfBirth(new Date(1990,1,1));
         testPatientRequest.setGender(SexEnum.M);
 
+        testPatientResponse = new PatientResponse();
+        testPatientResponse.setFirstName("John");
+        testPatientResponse.setLastName("Doe");
+        testPatientResponse.setDateOfBirth(new Date(1990,1,1));
+        testPatientResponse.setGender(SexEnum.M);
+
         objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Test
     void getAllPatients_ShouldReturnPatientsList() throws Exception {
-        List<PatientRequest> patients = List.of(testPatientRequest);
+        List<PatientResponse> patients = List.of(testPatientResponse);
         when(patientService.getAllPatients()).thenReturn(patients);
 
         mockMvc.perform(get("/api/patients"))
@@ -62,7 +70,7 @@ class PatientControllerIT {
 
     @Test
     void createPatient_ShouldReturnCreatedPatient() throws Exception {
-        when(patientService.createPatient(any())).thenReturn(testPatientRequest);
+        when(patientService.createPatient(any())).thenReturn(testPatientResponse);
 
         mockMvc.perform(post("/api/patients")
                         .contentType(String.valueOf(MediaType.APPLICATION_JSON))
@@ -73,7 +81,7 @@ class PatientControllerIT {
 
     @Test
     void updatePatient_ShouldReturnUpdatedPatient() throws Exception {
-        when(patientService.updatePatient(eq(1L), any())).thenReturn(testPatientRequest);
+        when(patientService.updatePatient(eq(1L), any())).thenReturn(testPatientResponse);
 
         mockMvc.perform(put("/api/patients/1")
                         .contentType(String.valueOf(MediaType.APPLICATION_JSON))

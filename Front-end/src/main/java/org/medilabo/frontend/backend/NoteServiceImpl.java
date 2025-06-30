@@ -3,7 +3,6 @@ package org.medilabo.frontend.backend;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.medilabo.frontend.dto.NoteDTO;
 import org.medilabo.frontend.dto.note.CreateNoteRequest;
 import org.medilabo.frontend.dto.note.NoteCreatedResponse;
 import org.medilabo.frontend.dto.note.NoteUpdatedResponse;

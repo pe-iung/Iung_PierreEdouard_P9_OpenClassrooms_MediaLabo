@@ -1,17 +1,18 @@
 package org.medilabo.frontend.backend;
 
-import org.medilabo.frontend.dto.PatientDTO;
+import org.medilabo.frontend.dto.patient.PatientResponse;
+import org.medilabo.frontend.dto.patient.UpsertPatientRequest;
 
 import java.util.List;
 
 public interface PatientService {
-    List<PatientDTO> getAllPatients();
+    List<PatientResponse> getAllPatients();
 
-    PatientDTO getPatient(Long id);
+    PatientResponse getPatient(Long id);
 
-    PatientDTO createPatient(PatientDTO patient);
+    PatientResponse createPatient(UpsertPatientRequest patient);
 
-    void updatePatient(Long id, PatientDTO patient);
+    void updatePatient(Long id, UpsertPatientRequest patient);
 
     void deletePatient(Long id);
 }
