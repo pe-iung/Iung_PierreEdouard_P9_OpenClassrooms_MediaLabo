@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.medilabo.frontend.backend.PatientServiceImpl;
 import org.medilabo.frontend.backend.RiskAssessmentServiceImpl;
 import org.medilabo.frontend.dto.patient.PatientResponse;
-import org.medilabo.frontend.dto.RiskAssessmentDTO;
+import org.medilabo.frontend.dto.RiskAssessmentResponse;
 import org.medilabo.frontend.dto.patient.UpsertPatientRequest;
 import org.medilabo.frontend.exceptions.PatientNotFoundException;
 import org.medilabo.frontend.exceptions.RiskAssessmentException;
@@ -12,13 +12,9 @@ import org.medilabo.frontend.exceptions.UIException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -121,7 +117,7 @@ public class PatientController {
     @GetMapping("/{id}/risk")
     public String showRiskAssessment(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
-            RiskAssessmentDTO risk = riskAssessmentServiceImpl.assessPatient(id);
+            RiskAssessmentResponse risk = riskAssessmentServiceImpl.assessPatient(id);
             PatientResponse patient = patientServiceImpl.getPatient(id);
             model.addAttribute("risk", risk);
             model.addAttribute("patient", patient);

@@ -18,10 +18,10 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-    @Value("${SPRING_SECURITY_USER_NAME}")
+    @Value("${API_USERNAME}")
     private String backendApiUsername;
 
-    @Value("${SPRING_SECURITY_USER_PASSWORD}")
+    @Value("${API_PASSWORD}")
     private String backendApiPassword;
 
 

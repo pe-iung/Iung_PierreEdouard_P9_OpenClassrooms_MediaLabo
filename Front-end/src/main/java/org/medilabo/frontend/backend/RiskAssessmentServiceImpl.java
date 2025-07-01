@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.medilabo.frontend.dto.RiskAssessmentDTO;
+import org.medilabo.frontend.dto.RiskAssessmentResponse;
 import org.medilabo.frontend.exceptions.RiskAssessmentException;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
     private final RiskAssessmentClient riskClient;
 
     @Override
-    public RiskAssessmentDTO assessPatient(Long patientId) {
+    public RiskAssessmentResponse assessPatient(Long patientId) {
         try {
             return riskClient.assessPatient(patientId);
         } catch (FeignException.BadRequest e) {

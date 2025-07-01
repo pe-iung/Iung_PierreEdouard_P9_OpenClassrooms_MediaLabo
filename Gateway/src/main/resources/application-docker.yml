@@ -5,17 +5,17 @@ spring:
     gateway:
       routes:
         - id: patient_service
-          uri: http://localhost:8081
+          uri: http://patient-service:8081
           predicates:
             - Path=/api/patients/**,/api/patients/batch
 
         - id: note_service
-          uri: http://localhost:8083
+          uri: http://note-service:8083
           predicates:
             - Path=/api/notes/**,/api/notes/batch
 
         - id: risk_assessment_service
-          uri: http://localhost:8084
+          uri: http://risk-assessment-service:8084
           predicates:
             - Path=/api/risk/**
 

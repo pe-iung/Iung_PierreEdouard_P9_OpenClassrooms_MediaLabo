@@ -63,8 +63,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_SECURITY_USER_NAME=${API_USERNAME}
-      - SPRING_SECURITY_USER_PASSWORD=${API_PASSWORD}
+      - SPRING_PROFILES_ACTIVE=docker
+      - API_USERNAME=${API_USERNAME}
+      - API_PASSWORD=${API_PASSWORD}
     depends_on:
       - patient-service
       - note-service
@@ -77,6 +78,7 @@ services:
     ports:
       - "8082:8082"
     environment:
+      - SPRING_PROFILES_ACTIVE=docker
       - API_USERNAME=${API_USERNAME}
       - API_PASSWORD=${API_PASSWORD}
       - GATEWAY_URL=http://gateway:8080

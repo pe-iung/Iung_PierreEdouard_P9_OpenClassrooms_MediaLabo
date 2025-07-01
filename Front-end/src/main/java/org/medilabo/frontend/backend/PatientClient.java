@@ -1,5 +1,6 @@
 package org.medilabo.frontend.backend;
 
+import org.medilabo.frontend.configuration.FeignClientConfig;
 import org.medilabo.frontend.dto.patient.PatientResponse;
 import org.medilabo.frontend.dto.patient.UpsertPatientRequest;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,7 +12,7 @@ import java.util.List;
  * Feign client interface for making HTTP requests to the Patient service through the API gateway.
  * Handles all patient-related API calls.
  */
-@FeignClient(name = "patientClient", url = "${gateway.url}")
+@FeignClient(name = "patientClient", url = "${gateway.url}", configuration = FeignClientConfig.class)
 public interface PatientClient {
 
     @GetMapping("/api/patients")
