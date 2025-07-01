@@ -3,6 +3,7 @@ package com.openclassrooms.P9;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+//todo remove P9app deadcode
 @SpringBootTest
 class P9ApplicationTests {
 

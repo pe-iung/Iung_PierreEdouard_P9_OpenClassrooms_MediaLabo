@@ -49,7 +49,13 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/patients", true)
                         .permitAll()
                 )
+
                 .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .clearAuthentication(true)
                         .permitAll()
                 );
         return http.build();

@@ -5,6 +5,7 @@
     <title>Note Form</title>
 </head>
 <body>
+<div th:replace="fragments/navbar :: navbar"></div>
 <div class="container mt-5">
     <h1 class="mb-4" th:text="${noteId} ? 'Edit Note' : 'New Note'"></h1>
 
