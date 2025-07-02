@@ -24,15 +24,15 @@ CONFIGURATION
 ------------
 1. Create .env file from .env.example with:
 
-# Database Credentials
-MYSQL_ROOT_PASSWORD=your_mysql_password
-MYSQL_ROOT_USERNAME=your_mysql_username
-MONGO_ROOT_USERNAME=your_mongo_username
-MONGO_ROOT_PASSWORD=your_mongo_password
+Database Credentials
+MYSQL_ROOT_PASSWORD
+MYSQL_ROOT_USERNAME
+MONGO_ROOT_USERNAME
+MONGO_ROOT_PASSWORD
 
-# API Credentials
-API_USERNAME=your_api_username
-API_PASSWORD=your_api_password
+API Credentials (also used for webapp login with username/password)
+API_USERNAME
+API_PASSWORD
 
 RUNNING THE APPLICATION
 ---------------------
@@ -65,3 +65,62 @@ http://localhost:8084/swagger-ui/index.html
 AUTHENTICATION
 -------------
 Use the API credentials configured in .env file to log in.
+
+GREEN CODE
+-------------
+## What is Green Code?
+
+Green code (or software eco-design) is a development approach that aims to reduce the environmental impact of computer applications. It involves optimizing code to:
+• Reduce energy consumption
+• Minimize resource usage (CPU, memory, storage, network)
+• Improve algorithm efficiency
+• Extend equipment lifespan
+• Reduce software carbon footprint
+
+Green code is part of a broader sustainable development approach applied to IT.
+
+## What are the best practices for Green Code?
+
+1. Query and Data Optimization
+   - Limit network requests
+   - Optimize SQL queries
+   - Cache frequently used data
+   - Compress transmitted data
+
+2. Efficient Resource Management
+   - Release unused resources
+
+3. Architecture and Design
+   - Favor efficient algorithms
+   - Avoid dead and redundant code
+   - Use lightweight microservices
+
+4. Coding Best Practices
+   - Optimize loops and conditions
+   - Avoid unnecessary calculations
+   - Use appropriate data structures
+
+5. Infrastructure and Deployment
+   - Properly size resources
+   - Use lightweight containers
+
+## What are the improvement areas for the MediLabo project to comply with Green Code?
+
+1. Microservices Optimization
+   - Implement a distributed cache system for frequent data
+
+2. Data Management
+   - Implement pagination to limit data volume
+
+3. Architecture
+   - Implement a sleep mode system for rarely used services
+
+4. Specific Code
+   - Optimize algorithms
+   - Review log management to reduce their impact
+
+5. Infrastructure
+   - Optimize persisted data volumes
+   - Implement consumption metrics
+
+These improvements would significantly reduce the project's environmental footprint while maintaining its functionality.
