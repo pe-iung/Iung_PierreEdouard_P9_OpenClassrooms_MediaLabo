@@ -13,10 +13,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+// as requested, let's remove the lombok based dependancy injection, and rebuild it manually
+//@RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService{
     private final PatientRepository patientRepository;
     private final ModelMapper modelMapper;
+
+    // adding a manual explicit dependancy injection as discussed with sergio  on 7thJuly P9 soutenance visio
+    public PatientServiceImpl(PatientRepository patientRepository, ModelMapper modelMapper){
+        this.patientRepository = patientRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public List<PatientResponse> getAllPatients() {
