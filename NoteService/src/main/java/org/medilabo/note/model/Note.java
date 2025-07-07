@@ -25,8 +25,6 @@ public class Note {
     @NotBlank(message = "Content cannot be empty")
     private String content;
 
-//    private LocalDateTime createdAt = LocalDateTime.now();
-//    private LocalDateTime updatedAt = LocalDateTime.now();
     @CreatedDate
     private Instant createdAt;
 

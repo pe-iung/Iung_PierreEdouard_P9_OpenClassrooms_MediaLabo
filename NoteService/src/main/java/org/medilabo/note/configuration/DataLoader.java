@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.medilabo.note.dto.CreateNoteRequest;
-import org.medilabo.note.dto.NoteDTO;
 import org.medilabo.note.service.NoteService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

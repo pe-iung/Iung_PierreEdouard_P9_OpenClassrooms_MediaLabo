@@ -33,37 +33,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(body);
     }
 
-//    @ExceptionHandler(PatientConflictException.class)
-//    public ResponseEntity<?> handlePatientConflict(PatientConflictException ex, WebRequest request) {
-//        log.warn("Patient conflict: {}", ex.getMessage());
-//        ProblemDetail body = createProblemDetail(
-//                ex,
-//                HttpStatus.CONFLICT,
-//                ex.getMessage(),
-//                null,
-//                null,
-//                request
-//        );
-//        return ResponseEntity
-//                .status(HttpStatus.CONFLICT)
-//                .body(body);
-//    }
-//
-//    @ExceptionHandler(PatientValidationException.class)
-//    public ResponseEntity<?> handleValidation(PatientValidationException ex, WebRequest request) {
-//        log.warn("Validation error: {}", ex.getMessage());
-//        ProblemDetail body = createProblemDetail(
-//                ex,
-//                HttpStatus.BAD_REQUEST,
-//                ex.getMessage(),
-//                null,
-//                null,
-//                request
-//        );
-//        return ResponseEntity
-//                .status(HttpStatus.BAD_REQUEST)
-//                .body(body);
-//    }
 
 
     @ExceptionHandler(Exception.class)

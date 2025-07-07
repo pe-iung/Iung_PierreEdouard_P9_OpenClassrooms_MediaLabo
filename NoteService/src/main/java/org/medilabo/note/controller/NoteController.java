@@ -3,13 +3,11 @@ package org.medilabo.note.controller;
 import lombok.RequiredArgsConstructor;
 import org.medilabo.note.dto.CreateNoteRequest;
 import org.medilabo.note.dto.NoteCreatedResponse;
-import org.medilabo.note.dto.NoteDTO;
 import org.medilabo.note.dto.UpdateNoteRequest;
 import org.medilabo.note.service.NoteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/notes")

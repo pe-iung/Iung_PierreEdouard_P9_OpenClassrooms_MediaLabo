@@ -12,7 +12,6 @@ import org.medilabo.riskassessmentservice.model.RiskAssessment;
 import org.medilabo.riskassessmentservice.model.RiskLevel;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -36,10 +35,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             "anormal",
             "anticorps",
             "cholestérol",
-            //"fumer",
             "(?:fum(?:e(?:ur|use)|er))",
-//            "fumeur",
-//            "fumeuse",
             "hémoglobine a1c",
             "microalbumine",
             "poids",
@@ -76,20 +72,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
             throw new RiskNotFoundException(patientId);
         }
     }
-//    @Override
-//    public long countTriggers(List<NoteDTO> notes) {
-//        if (notes == null || notes.isEmpty()) {
-//            return 0;
-//        }
-//
-//        String allNotes = notes.stream()
-//                .map(note -> note.getContent().toLowerCase())
-//                .collect(Collectors.joining(" "));
-//
-//        return TRIGGER_TERMS.stream()
-//                .filter(allNotes::contains)
-//                .count();
-//    }
+
 
     @Override
     public long countTriggers(List<NoteDTO> notes) {
